@@ -85,40 +85,29 @@
 
 
   <div style="width:100%; padding-left: 15%; padding-right: 15%;">
-    <img src="/images/Thunivu.JPG" alt="Vairsu Poster" style="width:100%;height:200px;">
+    <img src="/images/Varisu.JPG" alt="Vairsu Poster" style="width:100%;height:160px;">
   </div>
 
   <p style="font-size: 20px;font-weight: bold;margin: 10px;text-decoration: underline; text-align: center;">
-    Thunivu - Day1(Jan11) Advance sales (Paytm Movies)</p>
+    Varisu - Day1(Jan11) Advance sales </p>
 
   <!--padding-left:20% ; padding-right:20% -->
   <div id = "dropdown_div" style="width:100%; font-size: 15px; ; 
     display: inline-block;">
-      <!--
-      <select name="bms_paytm" id="bms_paytm_dropdown" value="1">
-        <option>Paytm Movies</option>
-        <option>BookMyShow</option>
+      
+      <select name="bms_paytm" id="bms_paytm_dropdown" value="1" onchange="drop_func()">
+        <option value="1" >BookMyShow</option>
+        <option value="2" >Paytm Movies</option>
       </select>
-      -->
-      <p style="display: inline-block;"> Select State</p>
-      <select style="display: inline-block;" name="States" id="state_dropdown" value="1" onchange="drop_func()" >
-        <option value="1"  >Total India</option>
-        <option value="2">TamilNadu</option>
-        <option value="3" onclick="custom_drop()">Telugu States</option>
-        <option value="4">Kerala</option>
-        <option value="5">Karnataka</option>
-        <option value="6">North India / ROI</option>
-      </select>
-      <div style="display: inline-block;" id = "tsap_dp_div"></div>
-      <!--<script>custom_drop()</script>-->
-      <button style="display: inline-block;" type="button" onclick="getData()">Refresh Data</button>
+      
   </div>
 
    
-    <div id="adv_sales_container" style="width: 100%;">
-      
-    </div>
-    <!--<iframe id = "adv_iframe" height="200" width="300"></iframe> -->
+    <!--<div id="adv_sales_container" style="width: 100%;"></div> height="200" width="300" --> 
+    <iframe id = "adv_iframe" onload="iframeload()" style="width: 100%; " src="/advancesales/varisu/Varisu_Day1_adv_bms-upd1.html" >
+    </iframe> 
+
+
     <div id = "about">
         <p>Contact Us</p>
         <div id = "contact_buts">
@@ -131,62 +120,34 @@
     
 </body>
 
-<style>
-    .dropbtn {
-  background-color: #3498DB;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-
-.dropbtn:hover, .dropbtn:focus {
-  background-color: #2980B9;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  overflow: auto;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown a:hover {background-color: #ddd;}
-
-.show {display: block;}
-</style>
+ 
 <script>
-  // api url
-  //https://f2c20u.deta.dev/total?movie=Varisu
+  function iframeload()
+  {
+    ifr = document.getElementById('adv_iframe');
+    if (ifr)
+    {
+      ifr.height = "";
+      ifr.height = ifr.contentWindow.document.body.scrollHeight + "px";
+    }
+  }
+
   function drop_func()
   {
-    var sd = document.getElementById("state_dropdown");
-    state = sd.options[sd.selectedIndex].text;
-    state_id = sd.value;
-
-    if (state_id == "3")
-    {custom_drop();}
-    else{
-      div_el = document.getElementById("tsap_dp_div");
-      div_el.innerHTML = '';
+    var sd = document.getElementById("bms_paytm_dropdown");
+    ol = sd.options[sd.selectedIndex].text;
+    ol_id = sd.value;
+    ifr = document.getElementById('adv_iframe');
+    if (ol_id == "1")
+    {
+        
+        ifr.src = '/advancesales/varisu/Varisu_Day1_adv_bms-upd1.html'
     }
-    getData();
+    if (ol_id == "2")
+    {
+        ifr.src = '/live_sales/varisu-live.html'
+    }
+    
   }
   function custom_drop()
   {
@@ -209,10 +170,11 @@
 
   function getData()
   {
-    let base_api = "https://25lh4r.deta.dev/";
+    let base_api = "https://bki4b3.deta.dev/";
     let api_url;
     //base_api = "http://192.168.0.13:8001/"
-    movie_name = 'Thunivu'
+    movie_name = 'Varisu'
+    //movie_name ='Dhamaka'
 
     var sd = document.getElementById("state_dropdown");
     state = sd.options[sd.selectedIndex].text;

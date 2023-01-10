@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Office India - Pan India collection reports</title>
+    <link rel="stylesheet" href="/style.css">
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8">
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1827849686137071"
+    crossorigin="anonymous"></script>
+    <!-- <script src = "script.js"></script> -->
+</head>
+<body>
+    
+    <div id = "heading">
+        <h1>Box Office PanIndia</h1>
+        <!--<div id = "heading">Box Office PanIndia</div>-->
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="https://twitter.com/Box_OfficeTrack?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @Box_OfficeTrack</a>
+    </div>
+
+    <div id = "nav_cont">
+      <div id ="topnav">
+          <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
+          <!--
+              <a href="/">Home</a>
+          <a href="/live_sales">Live Advance Sales</a>
+          <a href="/advancesales">Advance Sales Reports</a>
+          <a href="/OSadvancesales">Overseas Advance Sales</a>
+          <a href="/livetracking">Live Collection Tracking</a>
+          <a href="/collections">Collection Reports</a>
+          <a href="#about">About Us</a>
+      -->
+      </div>
+      <!--<span id ="navpoint" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>-->
+      <span id ="navpoint" style="font-size:30px;cursor:pointer" onclick="openNav()"></span>
+  </div>
+  
+  <script>
+      function openNav() {
+          document.getElementById("topnav").style.width = "250px";
+      }
+
+      function closeNav() {
+          document.getElementById("topnav").style.width = "0";
+      }
+      if (window.matchMedia("(max-width: 700px)").matches) {
+          console.log(window.matchMedia("(max-width: 700px)").matches)
+          // Viewport is less or equal to 700 pixels wide
+          div_elem = document.getElementById("topnav");
+          div_elem.innerHTML = `
+              <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+              <a href="/">Home</a>
+              <a href="/live_sales">Live Advance Sales</a>
+              <a href="/advancesales">Advance Sales Reports</a>
+              <a href="/OSadvancesales">Overseas Advance Sales</a>
+              <a href="/livetracking">Live Collection Tracking</a>
+              <a href="/collections">Collection Reports</a>
+              <a href="#about">About Us</a>
+          `; 
+          span_elem = document.getElementById("navpoint")
+          span_elem.innerHTML = `&#9776;` 
+      } 
+      else
+      {
+          console.log(window.matchMedia("(max-width: 700px)").matches)
+          div_elem = document.getElementById("topnav");
+          div_elem.innerHTML = `<a href="/">Home</a>
+              <a href="/live_sales">Live Advance Sales</a>
+              <a href="/advancesales">Advance Sales Reports</a>
+              <a href="/OSadvancesales">Overseas Advance Sales</a>
+              <a href="/livetracking">Live Collection Tracking</a>
+              <a href="/collections">Collection Reports</a>
+              <a href="#about">About Us</a>
+          `;
+          // Viewport is greater than 700 pixels wide
+          span_elem = document.getElementById("navpoint")
+          span_elem.innerHTML = '';
+          
+      }
+      
+  </script>
+
+
+  <div style="width:100%; padding-left: 15%; padding-right: 15%;">
+    <img src="/images/Varisu.JPG" alt="Vairsu Poster" style="width:100%;height:160px;">
+  </div>
+
+  <p style="font-size: 20px;font-weight: bold;margin: 10px;text-decoration: underline; text-align: center;">
+    Varisu - USA Advance sales </p>
+
+  <!--padding-left:20% ; padding-right:20% -->
+  <!--
+  <div id = "dropdown_div" style="width:100%; font-size: 15px; ; 
+    display: inline-block;">
+      
+      <select name="bms_paytm" id="bms_paytm_dropdown" value="1" onchange="drop_func()">
+        <option value="1" >BookMyShow</option>
+        <option value="2" >Paytm Movies</option>
+      </select>
+  </div>
+  -->
+
+   
+    <!--<div id="adv_sales_container" style="width: 100%;"></div> height="200" width="300" --> 
+    <iframe id = "adv_iframe" onload="iframeload()" style="width: 100%; " src="/OSadvancesales/varisu/Varisu (Tamil)_10Jan_USA_adv_-upd6.html" >
+    </iframe> 
+
+
+    <div id = "about">
+        <p>Contact Us</p>
+        <div id = "contact_buts">
+            <button onclick = "window.open('https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=boxofficetrackindia@gmail.com', '_blank');return false;">Email
+            </button>
+            <a href="https://twitter.com/Box_OfficeTrack?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @Box_OfficeTrack</a>
+
+        </div>
+    </div>
+    
+</body>
+
+ 
+<script>
+  function iframeload()
+  {
+    ifr = document.getElementById('adv_iframe');
+    if (ifr)
+    {
+      ifr.height = "";
+      ifr.height = ifr.contentWindow.document.body.scrollHeight + "px";
+    }
+  }
+
+  function drop_func()
+  {
+    var sd = document.getElementById("bms_paytm_dropdown");
+    ol = sd.options[sd.selectedIndex].text;
+    ol_id = sd.value;
+    ifr = document.getElementById('adv_iframe');
+    if (ol_id == "1")
+    {
+        
+        ifr.src = '/advancesales/varisu/Varisu_Day1_adv_bms-upd1.html'
+    }
+    if (ol_id == "2")
+    {
+        ifr.src = '/live_sales/varisu-live.html'
+    }
+    
+  }
+  function custom_drop()
+  {
+    var sd = document.getElementById("state_dropdown");
+    state = sd.options[sd.selectedIndex].text;
+    state_id = sd.value;
+
+    if (state_id == "3")
+    {
+      div_el = document.getElementById("tsap_dp_div");
+      div_el.innerHTML = `<select id="tsap_dropdown" value="30" onchange="getData()">
+        <option value="30">TS-AP</option>
+        <option value="31">Telangana</option>
+        <option value="32">AndhraPradesh</option>
+      </select>`;
+      document.getElementById("state_dropdown").value="3";
+    }
+  }
+  
+
+  function getData()
+  {
+    let base_api = "https://bki4b3.deta.dev/";
+    let api_url;
+    //base_api = "http://192.168.0.13:8001/"
+    movie_name = 'Varisu'
+    //movie_name ='Dhamaka'
+
+    var sd = document.getElementById("state_dropdown");
+    state = sd.options[sd.selectedIndex].text;
+    state_id = sd.value;
+
+    if (state_id == "3")
+    {
+      sd = document.getElementById("tsap_dropdown");
+      state = sd.options[sd.selectedIndex].text;
+      state_id = sd.value;
+      /*console.log(state_id);
+      api_url = base_api +'state' + '?movie=' + movie_name + '&state=' + state;
+      console.log(api_url);
+      getapi(api_url, state);
+      return;*/
+    }
+
+    if (state_id == "6")
+    {
+      state = "ROI";
+    }
+    
+
+   api_url = base_api + 'total' + '?movie=' + movie_name;
+    console.log(state_id);
+    if (state_id != "1")
+    {
+        api_url = base_api +'state' + '?movie=' + movie_name + '&state=' + state;
+        //state?movie=Vairsu&state=TamilNadu
+    }
+    
+    // Calling that async function
+
+    getapi(api_url, state);
+  }
+  // Defining async function
+  async function getapi(url, state) {
+      //headers
+      headers= {
+        'Authority':  'f2c20u.deta.dev',
+        'Accept-Language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'Pragma': 'no-cache',
+        'Referer': 'https://f2c20u.deta.dev/docs',
+        'Sec-Fetch-Dest': 'empty',
+        'Sec-Fetch-Mode': 'no-cors',
+        'Sec-Fetch-Site': 'none',
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+        'accept': 'text/html',
+        'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
+        'sec-ch-ua-mobile': '?0'
+      }
+      //  response
+      console.log(url);
+      try{
+        const response = await fetch(url, headers);
+        console.log(response);
+        
+        // HTML reponse
+        var data = await response.text();
+        //console.log(data);
+        if (response.status==200) {
+          cont_div = document.getElementById("adv_sales_container");
+          cont_div.innerHTML = data;
+        }
+        else 
+        {
+          cont_div = document.getElementById("adv_sales_container");
+          cont_div.innerHTML = "<div> No data </div>";
+        }
+      }
+      catch(err)
+      {
+        cont_div = document.getElementById("adv_sales_container");
+        cont_div.innerHTML = `<div style="text-align: center;"> No data </div>`;
+      }
+      //show(data);
+  }
+  
+  // call func
+  getData();
+
+    /* When the user clicks on the button, 
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+    
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+    </script>
+
+</html>
+            

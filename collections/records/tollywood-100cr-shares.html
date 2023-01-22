@@ -3,7 +3,7 @@
 
 <head>
   <script async="async" data-cfasync="false" src="//pl18303822.highcpmrevenuenetwork.com/eb11d11fa1fb3730ecf9912917e6e437/invoke.js"></script>
-
+  
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BYC2HYBLXT"></script>
     <script>
@@ -16,9 +16,7 @@
     crossorigin="anonymous"></script>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Box Office India - Pan India collection reports</title>
-  <link rel="stylesheet" href="/style.css">
+ 
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8">
   </script>
   <!-- <script src = "script.js"></script> -->
@@ -41,17 +39,21 @@
       /*]]>/* */
       </script>
     <script type='text/javascript' src='//pl18307261.highcpmrevenuenetwork.com/75/64/12/756412c23972a1bf037da9928e3f9641.js'></script>
-      
+    
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Box Office India - Pan India collection reports</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
+
+
 <!--<head>-->
 <style>
-
-/*#collections {
+#collections {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 20%;
   font-size: 18px;
-  /*margin-right: 30px;*//*
+  /*margin-right: 30px;*/
 }
 #collections td, #collections th {
   border: 1px solid #ddd;
@@ -68,7 +70,7 @@
 #collections
 {
   max-width:100%;
-/*white-space:nowrap;*//*
+/*white-space:nowrap;*/
 }
 
 #collections { width:100%; table-layout:fixed;}
@@ -98,13 +100,66 @@ caption
 }
 @media only screen and (max-width: 480px) {
   /* horizontal scrollbar for tables if mobile screen */
-  /*#collections {margin:0px; padding:0px}
-  #collections td { word-wrap:break-word;}
-  #collections th { word-wrap:break-word;}
-  #collections td{font-size: 4.1vw;}
-  #collections caption{font-size: 4.1vw}
-  #p_heading {font-size: 4.2vw; padding-left: 2px;}
+  #collections {margin:0px; padding:0px}
+  /*#collections td { word-wrap:break-word;}
+  #collections th { word-wrap:break-word;}*/
+  #collections td{font-size: 4.8vw;}
+  #collections caption{font-size: 5.2vw}
+  #p_heading {font-size: 5.2vw; padding-left: 2px; text-decoration: underline;}
   #img_pos{height: 200px;}
+  #collections{
+    display: block;
+    white-space: nowrap;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 200%;
+    border: 1px solid #ddd;
+  }
+  /*#collections {
+      overflow-x: auto;
+      display: block;
+      white-space: nowrap;
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      border: 1px solid #ddd;
+  }
+  #collections {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+  }
+  #collections th, td {
+    text-align: left;
+    padding: 8px;
+  }*/
+  #collections {
+  /*overflow-x:auto;*/ 
+  overflow-x: visible; /* Must be 'scroll' not 'auto' */
+  -webkit-overflow-scrolling: touch;
+  }
+  
+} 
+
+@media only screen and (max-width: 720px) {
+  /* horizontal scrollbar for tables if mobile screen */
+  #collections {margin:0px; padding:0px}
+  /*#collections td { word-wrap:break-word;}
+  #collections th { word-wrap:break-word;}*/
+  #collections td{font-size: 4.5vw;}
+  #collections caption{font-size: 4.5vw}
+  #p_heading {font-size: 4.5vw; padding-left: 5px; text-decoration: underline;}
+  #img_pos{height: 200px;}
+  #collections{
+    display: block;
+    white-space: nowrap;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 200%;
+    border: 1px solid #ddd;
+  }
+  /*
   #collections {
       overflow-x: auto;
       display: block;
@@ -113,7 +168,7 @@ caption
       border-spacing: 0;
       width: 100%;
       border: 1px solid #ddd;
-  }*/
+  }
   #collections {
     border-collapse: collapse;
     border-spacing: 0;
@@ -123,40 +178,34 @@ caption
   #collections th, td {
     text-align: left;
     padding: 8px;
-  }
+  }*/
+  #collections {
+  /*overflow-x:auto;*/ 
+  overflow-x: visible; /* Must be 'scroll' not 'auto' */
+  -webkit-overflow-scrolling: touch;
+}
   
 } 
 
-@media only screen and (max-width: 720px) {
-  /* horizontal scrollbar for tables if mobile screen */
-  /*#collections {
-      overflow-x: auto;
-      display: block;
-      white-space: nowrap;*
-      border-collapse: collapse;
-      border-spacing: 0;
-      width: 100%;
-      border: 1px solid #ddd;
-  }
-  #collections {margin:0px; padding:0px}
-  #collections td { word-wrap:break-word;}
-  #collections th { word-wrap:break-word;}
-  #collections td{font-size: 3.2vw;}
-  #collections caption{font-size: 3.2vw}
-  #p_heading {font-size: 3.5vw; padding-left: 5px;}
-  #img_pos{height: 200px;}*/
-  #collections {
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
-    border: 1px solid #ddd;
-  }
-  #collections th, td {
-    text-align: left;
-    padding: 8px;
-  }
-  
-} 
+.img_txt_container {
+ display: flex;
+ align-items: center; 
+ grid-template-columns: 1fr 1fr 1.2fr;
+ column-gap: 5px;
+ width: 100%;
+}
+.img_txt_container p{
+  width: 80%;
+}
+.img_txt_container img {
+  /*max-width: 100%;
+  max-height:100%;*/
+  width:150px;
+  height: 150px;
+}
+
+
+
 </style>
 <!--</head>-->
 
@@ -229,7 +278,7 @@ caption
 		'params' : {}
 	};
 	document.write('<scr' + 'ipt type="text/javascript" src="http' + (location.protocol === 'https:' ? 's' : '') + '://www.effectivecreativeformat.com/867ef927c5e45204a7873d72b610119b/invoke.js"></scr' + 'ipt>');
-</script>
+</script>  
 
 <p id = "p_heading">Tollywood Worldwide 100 crore share Movies - <text style=color:blue>@Box_OfficeTrack</text></p>
 
@@ -264,45 +313,64 @@ caption
 	document.write('<scr' + 'ipt type="text/javascript" src="http' + (location.protocol === 'https:' ? 's' : '') + '://www.effectivecreativeformat.com/a1e3b841720a7480db85987e10f5aaae/invoke.js"></scr' + 'ipt>');
 </script>
 
-<p style="color: #0818A8; margin: 1%;">
-  **List of TFI heros in elite 100 crore share club**
-  </p>
-  
+<div>
+<p style="color: green; font-weight: bold; margin: 1%;">
+  **List of TFI heros in elite 100 crore share club**👇
+</p>
 
-<p style=font-size:17px>
-  *** 1) Mahesh Babu *** 👇<br>
+<div class = "img_txt_container">
+  <p style=font-size:17px>
+    *** 1) <text style="color:#ff5f1f; font-weight: bold;"> Mahesh Babu  </text> *** <br>
   👉Sarileru Neekevvaru: 135cr<br>
   👉Sarkaru Vaari Paata: 110cr<br>
   👉Maharshi: 108cr<br>
   👉Bharath Ane Nenu: 103cr<br>
-  ***Total 4 100 crore share films***<br> 
-</p> 
+  *** Total <text style="color:green; font-weight: bold;">4</text> 100 crore share films ***<br> 
+  </p> 
+  <img src="/images/MahesBabu.jpg">
+</div>
+
+<div class = "img_txt_container">
+  <p style=font-size:17px>
+    *** 2) <text style="color:#ff5f1f; font-weight: bold;"> Prabhas</text> *** <br>
+    👉Baahubali2: 840cr<br>
+    👉Baahubali - 1: 305cr<br>
+    👉Saaho: 235cr<br>
+    *** Total <text style="color:green; font-weight: bold;">3</text> 100 crore share films ***<br> 
+  </p> 
+  <img src="/images/prabhas.jpg">
+</div>
+
+<div class = "img_txt_container">
 <p style=font-size:17px>
-  *** 2) Prabhas *** 👇<br>
-  👉Baahubali2: 840cr<br>
-  👉Baahubali - 1: 305cr<br>
-  👉Saaho: 235cr<br>
-  ***Total 3 100 crore share films***<br> 
-</p> 
-<p style=font-size:17px>
-  *** 3) Chiranjeevi*** 👇<br>
+  *** 3) <text style="color:#ff5f1f; font-weight: bold;">Chiranjeevi</text> ***<br>
   👉Syeraa Narasimhareddy: 145cr<br>
   👉Khaidi No 150: 105cr<br>
   👉Waltair Veerayya (multi-starrer): 102cr** (still running)<br>
-  ***Total 3 100 crore share films***<br> 
+  *** Total <text style="color:green; font-weight: bold;">3</text> 100 crore share films ***<br> 
 </p> 
+<img src="/images/chiranjeevi.jpg">
+</div>
+
+<div class = "img_txt_container">
 <p style=font-size:17px>
-  *** 4) Allu Arjun*** 👇<br>
-  👉Pushpa the rise (part1): 185cr<br>
-  👉Ala Vaikunthapurramulo: 160cr<br>
-  ***Total 2 100 crore share films***<br> 
-</p> 
-<p style=font-size:17px>
-  *** 5) Ram Charan*** 👇<br>
+  *** 4) <text style="color:#ff5f1f; font-weight: bold;">Ram Charan</text> *** <br>
   👉RRR (multi-starrer): 615cr<br>
   👉Rangasthalam: 130cr<br>
-  ***Total 2 100 crore share films***<br> 
-</p> 
+  *** Total <text style="color:green; font-weight: bold;">2</text> 100 crore share films ***<br> 
+</p>  
+<img src="/images/ramcharan.jpeg">
+</div>
+
+<div class = "img_txt_container">
+  <p style=font-size:17px>
+    *** 5) <text style="color:#ff5f1f; font-weight: bold;">Allu Arjun</text> *** <br>
+    👉Pushpa the rise (part1): 185cr<br>
+    👉Ala Vaikuntha purramulo: 160cr<br>
+    *** Total <text style="color:green; font-weight: bold;">2</text> 100 crore share films ***<br> 
+  </p>  
+  <img src="/images/alluarjun.jpg">
+  </div>
 
 <!-- ads -->
 <script type="text/javascript">
@@ -320,17 +388,25 @@ caption
 **If multistarrer also included Jr. NTR and Raviteja will join this elite 100 crore share club**
 </p>
 
+<div class = "img_txt_container">
 <p style=font-size:17px>
-  *** 6) Jr. NTR*** 👇<br>
+  *** 6) <text style="color:#ff5f1f; font-weight: bold;">Jr. NTR</text> *** <br>
   👉RRR (multi-starrer): 615cr<br>
-  ***Total 1 100 crore share film which is multi-starrer***<br> 
-</p> 
-<p style=font-size:17px>
-  *** 7) RaviTeja*** 👇<br>
-  👉Waltair Veerayya (multi-starrer): 102cr** (still running)<br>
-  ***Total 1 100 crore share film which is multi-starrer***<br> 
-</p> 
+  ***Total <text style="color:green; font-weight: bold;">1</text> 100 crore share film which is multi-starrer ***<br> 
+</p>  
+<img src="/images/jrNtr.jpg">
+</div>
 
+<div class = "img_txt_container">
+<p style=font-size:17px>
+  *** 7) <text style="color:#ff5f1f; font-weight: bold;">RaviTeja</text> *** <br>
+  👉Waltair Veerayya (multi-starrer): 102cr** (still running)<br>
+  ***Total <text style="color:green; font-weight: bold;">1</text> 100 crore share film which is multi-starrer ***<br> 
+</p>  
+<img src="/images/raviteja.jpg">
+</div>
+
+</div>
 
 <!--
 <p style=font-size:17px> 
@@ -366,8 +442,8 @@ https://www.videosprofitnetwork.com/watch.xml?key=0ff3342ae96559880daada8bc65ef3
 
 
 <p id = "p_heading">Telugu movies - top 15 Worldwide share (Tollywood) </text></p>
-<div style="overflow-x:auto;">
-<table id="collections">
+<div id="table_div">
+<table id="collections" >
   <tr>
     <th>Rank</th>
     <th>Movie</th>
@@ -514,6 +590,7 @@ https://www.videosprofitnetwork.com/watch.xml?key=0ff3342ae96559880daada8bc65ef3
   </tr>
 </table>
 </div>
+<br><br><br>
 
 <!-- ads -->
 <script type="text/javascript">
@@ -526,14 +603,20 @@ https://www.videosprofitnetwork.com/watch.xml?key=0ff3342ae96559880daada8bc65ef3
 	};
 	document.write('<scr' + 'ipt type="text/javascript" src="http' + (location.protocol === 'https:' ? 's' : '') + '://www.effectivecreativeformat.com/34d21fcb8c6faacf7b56819482783b67/invoke.js"></scr' + 'ipt>');
 </script>
+
 <div id="container-eb11d11fa1fb3730ecf9912917e6e437"></div>
+
 <!--&emsp; &nbsp; &nbsp;-->
 <p style=font-size:17px>Note: 1)  All 'Cr' - crores in INR <br>  
-  2) Share number includes not only telugu versions but all released versions of respective file<br>
+  2) Share number includes not only telugu versions but all released versions of respective film<br>
 </p>
 
 <p><span style="color: #cc0000;">Disclaimer:</span>
-  <span style="color: #0b5394;">The box office figures are compiled from various sources. Only Telugu language collections are considered for sorting the above table. The figures can be approximate and TrackTollywood does not make any claims about the authenticity of the data. However they are adequately indicative of the box-office performance of the film(s).</span>
+  <span style="color: #0b5394;">The box office figures are compiled from various sources.  
+    We make every effort to verify the data but we do not take any ownership or authenticity about box office data.
+    These numbers might vary from original producer or distributor numbers but they are an indication of how a movie was performed.
+    Use at your own discretion
+   </span>
   </p>
 
 <script type="text/javascript">

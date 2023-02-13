@@ -128,11 +128,6 @@ h1{
     /*border-bottom: 1px solid;*/
 }
 
-#about{
-    height : 500px;
-    /*border-bottom: 1px solid;*/
-}
-
 #projects{
     height : 500px;
     /*border-bottom: 1px solid;*/
@@ -140,14 +135,24 @@ h1{
 
 
 #about{
-    height : 100px;
-    border-top: 1px solid;
-    margin-top: 20px;;
+    /*height : 100px;*/
+    /*border-top: 1px solid;*/
+    margin-top: 20px;
+    padding-top: 10px;
+    background-color: #717171;
+    display: block;
+    overflow: auto;
+    /*width: 100%;*/
 }
 
-#about *{
-    text-align: center;
-}
+#about1{float:left;}
+#about2{float:right;}
+#about3{margin:0 auto;display: inline-block;}
+
+
+/*#about *{
+  text-align: center;
+}*/
 
 #contact_buts{
     display: flex;

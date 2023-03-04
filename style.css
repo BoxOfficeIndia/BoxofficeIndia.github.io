@@ -12,8 +12,10 @@ h1{
     /*font-size: 0px;*/
     display: inline;
     text-align: center;
-
 }
+
+a:visited { text-decoration: none; color:blue; }
+
 #heading{
     
     text-align: center;

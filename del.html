@@ -85,10 +85,17 @@
     <style>
         /* Create three equal columns that floats next to each other */
         .home_column {
-          float: left;
+          /*float: left;
           width: 33.33%;
-          padding: 10px;
-          height: 300px; /* Should be removed. Only for demonstration */
+          padding: 10px;*/
+          flex: 33%;
+          padding: 0 4px;
+        }
+
+        .home_row {
+          display: flex;
+          flex-wrap: wrap;
+          padding: 0 4px;
         }
         
         /* Clear floats after the columns */
@@ -106,8 +113,9 @@
         }
 
         .card_box{
-            border: 0px solid black;
-
+          border: 0px solid black;
+          margin-top: 8px;
+          vertical-align: middle;
         }
     </style>
 
@@ -118,8 +126,7 @@
           <div class="card_box">
             <a href="/blogs-articles/2023/pongal2023-50days.html" target="blank">
                 <img style="border: 1px solid black;" 
-                    src="/images/2023/others/pongal2023.jpg" alt="" width="300" height="250" 
-                >
+                    src="/images/2023/others/pongal2023.jpg" alt="" width="300" height="250">
                 <p>Test</p>
             </a>
           </div>

@@ -144,6 +144,25 @@
       <span id ="navpoint" style="font-size:30px;cursor:pointer" onclick="openNav()"></span>
   </div>
 
+  <script>
+    // Check if a new cache is available on page load.
+    window.addEventListener('load', function(e) {
+
+    window.applicationCache.addEventListener('updateready', function(e) {
+      if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+        // Browser downloaded a new app cache.
+        // Swap it in and reload the page to get the new hotness.
+        window.applicationCache.swapCache();
+        if (confirm('A new version of this site is available. Load it?')) {
+          window.location.reload();
+        }
+      } else {
+        // Manifest didn't changed. Nothing new to server.
+      }
+    }, false);
+
+    }, false);
+  </script>
   
 
   <!-- ads -->
@@ -164,12 +183,12 @@
 
 <!-- tweet share button-->  
   <a class="twitter-share-button"
-    href="https://twitter.com/intent/tweet?text=#Tu Jhoothi Main Makkaar  Day 1 advance sales 08Mar
-     #RanbirKapoor #ShraddhaKapoor #TJMM #TJMMAdvanceBooking %0A&amp;
-     url=https://boxofficeindia.github.io/livesales/2023/TJMM-live.html" 
-    data-size="large" target="_top" rel="nofollow">
-  Tweet</a><div style="width:100%; padding-top: 1%; padding-bottom: 3%;">
-  <img src="/images/2023/bollywood/TJMM/TJMM.jpg" alt="Vairsu Poster" style="width:100%;height:200px;">
+  href="https://twitter.com/intent/tweet?text=#Tu Jhoothi Main Makkaar  Day 1 advance sales 08Mar
+  #RanbirKapoor #ShraddhaKapoor #TJMM #TJMMAdvanceBooking %0A&amp;url=https://boxofficeindia.github.io/livesales/2023/TJMM-live.html" 
+  data-size="large" target="_top" rel="nofollow">Tweet</a>
+ 
+  <div style="width:100%; padding-top: 1%; padding-bottom: 3%;">
+  <img src="/images/2023/bollywood/TJMM/TJMM.jpg" alt="Poster" style="width:100%;height:200px;">
 </div>
 
 
@@ -248,7 +267,7 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      console.log('loaded');
+      //console.log('loaded');
       getData()
     });
   </script>
@@ -298,25 +317,27 @@ display: block;
 
 <script>
   // api
+  headers={}
   headers = {
-          'accept': 'application/json, text/javascript, */*; q=0.01',
-          'accept-language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
-          'X-API-Key': 'd03x1tmc_W5c3GdBzPdH2MToY3rJ2BjFd4haMfjGK',
-          'Content-Type': 'application/json',
+           'accept': 'application/json, text/javascript, */*; q=0.01',
+           'accept-language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
+           'X-API-Key': 'd03x1tmc_W5c3GdBzPdH2MToY3rJ2BjFd4haMfjGK',
+           'Content-Type': 'application/json',
           'Authority':  'database.deta.sh',
-          'Accept-Language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
-          'Cache-Control': 'no-cache',
-          'Connection': 'keep-alive',
-          'Pragma': 'no-cache',
-          'Referer': 'https://database.deta.sh/',
-          'Sec-Fetch-Dest': 'empty',
-          'Sec-Fetch-Mode': 'no-cors',
-          'Sec-Fetch-Site': 'none',
+         'Accept-Language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
+         'Cache-Control': 'must-revalidate, no-cache, max-age=12, no-store',
+  //         //'Connection': 'keep-alive',
+  //         'Pragma': 'no-cache',
+  //         'Expires':'0',
+  //         'Referer': 'https://database.deta.sh/',
+  //         'Sec-Fetch-Dest': 'empty',
+           'Sec-Fetch-Mode': 'no-cors',
+  //         'Sec-Fetch-Site': 'none',
           'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
-          'accept': 'text/html',
-          'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
-          'sec-ch-ua-mobile': '?0'
-  }
+  //         'accept': 'text/html',
+  //         'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
+  //         'sec-ch-ua-mobile': '?0'*/
+   }
     
   async function getData()
   {
@@ -325,18 +346,28 @@ display: block;
     var response = await fetch('https://database.deta.sh/v1/d03x1tmc/TJMM-total/query', {
       method: 'POST',
       headers: headers,
-      body: JSON.stringify({})
+      body: JSON.stringify({}),
+      cache:"no-store",
     });
-    var data = await response.text();
-    console.log('response:' + response + response.status)
+   
 
+    var currentTime = new Date();
+    var currentOffset = currentTime.getTimezoneOffset();
+    var ISTOffset = 330;   // IST offset UTC +5:30 
+    var ISTTime = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);
+    //alert('fetch_time' + response.status+ ISTTime )
+
+
+    
     if (response.status!=200) {
       cont_div = document.getElementById("adv_sales_container");
       cont_div.innerHTML = response;
       return;
     }
+    var data = await response.text();
+    //console.log('response:' + response + response.status)
     data = JSON.parse(data)
-    console.log(data)
+    //console.log(data)
     data = data.items
     data.sort(function(a, b) {
       const date1 = new Date(a['fetch_time']);
@@ -344,7 +375,7 @@ display: block;
       return date2 - date1;;
     });
     total_data = data[0]
-    console.log(total_data)
+    //console.log(total_data)
 
     fetch_time = total_data['fetch_time']
     total_coll = Math.round(total_data['Total Gross']).toLocaleString('en-IN') //formatINR
@@ -367,16 +398,17 @@ display: block;
     response = await fetch('https://database.deta.sh/v1/d03x1tmc/TJMM_states_cities/query', {
       method: 'POST',
       headers: headers,
-      body: JSON.stringify({})
+      body: JSON.stringify({}),
+      cache:"no-store",
     });
-    var data = await response.text();
-    console.log('response:' + response + response.status)
-
+    
     if (response.status!=200) {
       cont_div = document.getElementById("adv_sales_container");
       cont_div.innerHTML = response;
       return;
     }
+    var data = await response.text();
+    //console.log('response:' + response + response.status)
     data = JSON.parse(data)
     //console.log(data)
     data = data.items
@@ -389,7 +421,7 @@ display: block;
     html_data = data[0]
     city_html = html_data['city_html'].trim()
     state_html = html_data['state_html'].trim()
-    console.log(state_html)
+    //console.log(state_html)
 
     /*
     cont_div = document.getElementById("adv_sales_container");
@@ -401,11 +433,10 @@ display: block;
     var sd = document.getElementById("state_dropdown");
     state = sd.options[sd.selectedIndex].text;
     state_id = sd.value;
-    console.log(state + state_id)
+    //console.log(state + state_id)
 
     if (state_id.toString() == "1")
     {
-      console.log("check " +  state_id + state );
       output_html = state_html + total_html
     }
     else{
@@ -423,7 +454,7 @@ display: block;
     cont_div = document.getElementById("adv_sales_container");
     cont_div.innerHTML = title_html + ad_html + output_html;
 
-    console.log('yoooo' + state + state_id)
+    //console.log('yoooo' + state + state_id)
     
     //return total_html, city_html , state_html
 
@@ -439,7 +470,7 @@ display: block;
     var sd = document.getElementById("state_dropdown");
     state = sd.options[sd.selectedIndex].text;
     state_id = sd.value;
-    console.log(state + state_id)
+    //console.log(state + state_id)
 
     //get data
     /*

@@ -157,7 +157,7 @@
 
 <!-- tweet share button-->  
   <a class="twitter-share-button"
-    href="https://twitter.com/intent/tweet?text=#Romancham (Malayalam) 31 days Worldwide collection%0A👉Total WW gross: ₹ 60.6 crore%0A%0AFull report inside👇%0A#SoubinShahir #SushinShyam%0A&amp;url=https://boxofficeindia.github.io/collections/2023/Malayalam/romancham/Romancham-coll.html" 
+    href="https://twitter.com/intent/tweet?text=#Romancham (Malayalam) 31 days Worldwide collection%0A👉Total WW gross: ₹ 61.02 crore%0A%0AFull report inside👇%0A#SoubinShahir #SushinShyam%0A&amp;url=https://boxofficeindia.github.io/collections/2023/Malayalam/romancham/Romancham-coll.html" 
     data-size="large" target="_top" rel="nofollow">
   Tweet</a><div style="width:100%; padding-top: 1%; padding-bottom: 3%;">
   <img src="/images/2023/malayalam/romancham-1.jpg" alt="Movie Poster" style="width:100%;height:300px;">
@@ -208,13 +208,13 @@ Romancham is a 2023 Mollywood film in Malayalam language starring Soubin Sahir. 
 <text style = "color:green;font-size:17px;">  ** Overseas Gross ** </text> <br>
 👉USA : $21,704<br>
 👉Canada : CAD$260K /$191k (till feb26)<br>
-👉Australia : A$40,492 / $27k (18 days)<br>
-👉Newzealand : NZ$24,074 / $15K (opening weekend)<br>
+👉Australia : A$49,884 / $34k (till mar5)<br>
+👉Newzealand : NZ$36,825 / $23K (till mar5)<br>
 👉UK: £60,000 / $72k (11 days)<br>
-👉UAE-Gulf : 14.75cr / $1.785M (18 days) <br>[UAE:$1.16M; Rest GCC:$625K]<br>
+👉UAE-Gulf : 16.35cr / $1.985M (25 days) <br>[UAE:$1.3M; Rest GCC:$685K]<br>
 👉Singapore: SG$16K / $12k (11 days)<br>
-👉Rest: $50K<br>
-* TOTAL Overseas Gross : $2.4M / ₹20cr <br>(overseas number yet to be updated, used some estimate)<br>
+👉Rest: $100K<br>
+* TOTAL Overseas Gross : $2.47M / ₹20.42cr <br><br>
 <br>
 
 <!-- ads -->
@@ -230,7 +230,7 @@ Romancham is a 2023 Mollywood film in Malayalam language starring Soubin Sahir. 
   </script>
 <br>
 <text style = "color:green;font-size:17px;">  ** Box Office verdict summary ** </text> <br>
-👉Total Worldwide gross: ₹ 60.6 crore<br>
+👉Total Worldwide gross: ₹ 61.02 crore<br>
 👉WW share: ₹ 27.12 crore<br>
 👉Budget: ₹1.5 crore<br>
 👉Recovery: -<br>
@@ -602,46 +602,42 @@ Romancham is a 2023 Mollywood film in Malayalam language starring Soubin Sahir. 
 
   </body>
   <script>
-      function openNav() {
-          document.getElementById("topnav").style.width = "250px";
-      }
+    nav_elems = `<a href="/">Home</a>
+            <a href="/livesales">Live Advance Sales</a>
+            <a href="/livetracking">Live Collection Tracking</a>
+            <a href="/collections">Collection Reports</a>
+            <a href="/collections">Boxoffice Records</a>   
+            <a href="/advancesales">Advance Sales Reports</a>
+            <a href="/OSadvancesales">Overseas Advance Sales</a>
+            <a href="/blogs-articles/index.html">News</a>
+            <a href="/gallery/index.html">Gallery</a>
+            <a href="/site data/about.html">About Us</a>
+    `
+    function openNav() {
+        document.getElementById("topnav").style.width = "250px";
+    }
 
-      function closeNav() {
-          document.getElementById("topnav").style.width = "0";
-      }
-      if (window.matchMedia("(max-width: 700px)").matches) {
-          console.log(window.matchMedia("(max-width: 700px)").matches)
-          // Viewport is less or equal to 700 pixels wide
-          div_elem = document.getElementById("topnav");
-          div_elem.innerHTML = `
-              <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-              <a href="/">Home</a>
-              <a href="/live_sales">Live Advance Sales</a>
-              <a href="/advancesales">Advance Sales Reports</a>
-              <a href="/OSadvancesales">Overseas Advance Sales</a>
-              <a href="/livetracking">Live Collection Tracking</a>
-              <a href="/collections">Collection Reports</a>
-              <a href="#about">About Us</a>
-          `; 
-          span_elem = document.getElementById("navpoint")
-          span_elem.innerHTML = `&#9776;` 
-      } 
-      else
-      {
-          console.log(window.matchMedia("(max-width: 700px)").matches)
-          div_elem = document.getElementById("topnav");
-          div_elem.innerHTML = `<a href="/">Home</a>
-              <a href="/live_sales">Live Advance Sales</a>
-              <a href="/advancesales">Advance Sales Reports</a>
-              <a href="/OSadvancesales">Overseas Advance Sales</a>
-              <a href="/livetracking">Live Collection Tracking</a>
-              <a href="/collections">Collection Reports</a>
-              <a href="#about">About Us</a>
-          `;
-          // Viewport is greater than 700 pixels wide
-          span_elem = document.getElementById("navpoint")
-          span_elem.innerHTML = '';
-          
-      }
-  </script>
+    function closeNav() {
+        document.getElementById("topnav").style.width = "0";
+    }
+    if (window.matchMedia("(max-width: 700px)").matches) {
+        console.log(window.matchMedia("(max-width: 700px)").matches)
+        // Viewport is less or equal to 700 pixels wide
+        div_elem = document.getElementById("topnav");
+        div_elem.innerHTML = `
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>` + nav_elems
+        span_elem = document.getElementById("navpoint")
+        span_elem.innerHTML = `&#9776;` 
+    } 
+    else
+    {
+        console.log(window.matchMedia("(max-width: 700px)").matches)
+        div_elem = document.getElementById("topnav");
+        div_elem.innerHTML = nav_elems;
+        // Viewport is greater than 700 pixels wide
+        span_elem = document.getElementById("navpoint")
+        span_elem.innerHTML = '';
+        
+    }
+</script>
 </html>

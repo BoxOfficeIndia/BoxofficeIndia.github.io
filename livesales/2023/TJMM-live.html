@@ -55,6 +55,7 @@
     width: 20%;
     font-size: 18px;
     /*margin-right: 30px;*/
+    background-color: whitesmoke;
   }
   #collections td, #collections th {
     border: 1px solid #ddd;
@@ -127,8 +128,8 @@
   </style>
   <!--</head>-->
 
-  <body>
-    <div id = "heading">
+<body>
+  <div id = "heading">
       <h1>Box Office Pan India</h1>
       <!--<div id = "heading">Box Office Pan India</div>-->
       &nbsp;&nbsp;&nbsp;&nbsp;
@@ -154,9 +155,11 @@
       'params' : {}
     };
     document.write('<scr' + 'ipt type="text/javascript" src="http' + (location.protocol === 'https:' ? 's' : '') + '://www.effectivecreativeformat.com/867ef927c5e45204a7873d72b610119b/invoke.js"></scr' + 'ipt>');
-  </script>  <p id = "p_heading"> 
-Tu Jhoothi Main Makkaar Day1 08Mar Advance Sales (Paytm movies)  - 
-<text style=color:blue>@Box_OfficeTrack</text></p> 
+  </script>  
+  <p id = "p_heading"> 
+    Tu Jhoothi Main Makkaar Live Advance Sales - India (Paytm movies)  - 
+  <text style=color:blue>@Box_OfficeTrack</text>
+  </p> 
 
 <!-- tweet share button-->  
   <a class="twitter-share-button"
@@ -181,7 +184,7 @@ Tu Jhoothi Main Makkaar Day1 08Mar Advance Sales (Paytm movies)  -
       </select>
       -->
       <p style="display: inline-block;"> Select State</p>
-      <select style="display: inline-block;" name="States" id="state_dropdown" value="1" onchange="drop_func()" >
+      <select style="display: inline-block;" name="States" id="state_dropdown" value="1" onchange="getData()" >
         <option value="1"  >India - Top states</option>
         <option value="2">India - Top cities</option>
       </select>
@@ -255,7 +258,14 @@ Tu Jhoothi Main Makkaar Day1 08Mar Advance Sales (Paytm movies)  -
             <a href = "https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=boxofficetrackindia@gmail.com" target="_blank" rel="noreferrer noopener"> 
                 Contact Us </a>
         </div>
-    </footer>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log('loaded');
+      getData()
+    });
+  </script>
 
 </body>
 
@@ -301,21 +311,167 @@ display: block;
 </style>
 
 <script>
-  // api url
+  // api
+  headers = {
+          'accept': 'application/json, text/javascript, */*; q=0.01',
+          'accept-language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
+          'X-API-Key': 'd03x1tmc_W5c3GdBzPdH2MToY3rJ2BjFd4haMfjGK',
+          'Content-Type': 'application/json',
+          'Authority':  'database.deta.sh',
+          'Accept-Language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+          'Pragma': 'no-cache',
+          'Referer': 'https://database.deta.sh/',
+          'Sec-Fetch-Dest': 'empty',
+          'Sec-Fetch-Mode': 'no-cors',
+          'Sec-Fetch-Site': 'none',
+          'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+          'accept': 'text/html',
+          'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
+          'sec-ch-ua-mobile': '?0'
+  }
+    
+  async function getData()
+  {
+    
+    url = "https://database.deta.sh/v1/default/TJMM-total"
+    var response = await fetch('https://database.deta.sh/v1/d03x1tmc/TJMM-total/query', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({})
+    });
+    var data = await response.text();
+    console.log('response:' + response + response.status)
+
+    if (response.status!=200) {
+      cont_div = document.getElementById("adv_sales_container");
+      cont_div.innerHTML = response;
+      return;
+    }
+    data = JSON.parse(data)
+    console.log(data)
+    data = data.items
+    data.sort(function(a, b) {
+      const date1 = new Date(a['fetch_time']);
+      const date2 = new Date(b['fetch_time']);
+      return date2 - date1;;
+    });
+    total_data = data[0]
+    console.log(total_data)
+
+    fetch_time = total_data['fetch_time']
+    total_coll = Math.round(total_data['Total Gross']).toLocaleString('en-IN') //formatINR
+    total_sold_tickets =  total_data['Sold Tickets'].toLocaleString('en-IN') 
+
+    total_html = `
+      <br>
+      <div id = 'tr_total' > ` + `
+      👇*** ` + total_data['Show Date'] + `: Advance Sales Report - Paytm Movies ***👇<br>
+      Total India Gross : Rs ` + total_coll + `<br> 
+        Show Count : ` + total_data['Total Shows'] + `<br> 
+        Occupancy : ` + total_data['Overall Occupancy'] + `% <br>
+        Total Tickets Sold : ` + total_sold_tickets + ` <br> 
+        Fastfilling/Soldout  : ` + total_data['Fast Filling'] + ' FF & ' + total_data['Housefull Count'] + ' HF <br>' + `
+      </div>
+      <div></div>
+    `;
+    
+    // html tables
+    response = await fetch('https://database.deta.sh/v1/d03x1tmc/TJMM_states_cities/query', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({})
+    });
+    var data = await response.text();
+    console.log('response:' + response + response.status)
+
+    if (response.status!=200) {
+      cont_div = document.getElementById("adv_sales_container");
+      cont_div.innerHTML = response;
+      return;
+    }
+    data = JSON.parse(data)
+    //console.log(data)
+    data = data.items
+
+    data.sort(function(a, b) {
+      const date1 = new Date(a['fetch_time']);
+      const date2 = new Date(b['fetch_time']);
+      return date2 - date1;;
+    });
+    html_data = data[0]
+    city_html = html_data['city_html'].trim()
+    state_html = html_data['state_html'].trim()
+    console.log(state_html)
+
+    /*
+    cont_div = document.getElementById("adv_sales_container");
+    output_html = city_html + JSON.stringify(total_data)
+    cont_div.innerHTML = output_html;
+    */
+
+    
+    var sd = document.getElementById("state_dropdown");
+    state = sd.options[sd.selectedIndex].text;
+    state_id = sd.value;
+    console.log(state + state_id)
+
+    if (state_id.toString() == "1")
+    {
+      console.log("check " +  state_id + state );
+      output_html = state_html + total_html
+    }
+    else{
+      output_html = city_html + total_html
+    }
+    title_html = `<p style="font-weight:bold;"> Tu Jhoothi Main Makkaar Day1 
+      08Mar Advance Sales (Paytm movies)<br>` +  `<text style="color:red; font-weight:normal;">
+      Data Last updated: ` + fetch_time + `</text> 
+    </p>`
+
+    // write to div
+    cont_div = document.getElementById("adv_sales_container");
+    cont_div.innerHTML = title_html + output_html;
+
+    console.log('yoooo' + state + state_id)
+    
+    //return total_html, city_html , state_html
+
+    
+  }
+  
+  // call func
+  //getData();
+  //drop_func()
 
   function drop_func()
   {
     var sd = document.getElementById("state_dropdown");
     state = sd.options[sd.selectedIndex].text;
     state_id = sd.value;
+    console.log(state + state_id)
 
-    if (state_id == "3")
-    {custom_drop();}
-    else{
-      div_el = document.getElementById("tsap_dp_div");
-      div_el.innerHTML = '';
+    //get data
+    /*
+    await total_html, city_html , state_html = getData();
+
+    if (state_id.toString() == "1")
+    {
+      console.log("check " +  state_id + state );
+      output_html = state_html + total_html
     }
-    getData();
+    else{
+      output_html = city_html + total_html
+    }
+
+    // write to div
+    cont_div = document.getElementById("adv_sales_container");
+    cont_div.innerHTML = output_html;
+
+    console.log('yoooo' + state + state_id)*/
+    
+    
   }
   function custom_drop()
   {
@@ -335,52 +491,8 @@ display: block;
     }
   }
 
-  async function getData()
-  {
-    url = "https://database.deta.sh/v1/default/TJMM-total"
-    const response = await fetch('https://database.deta.sh/v1/d03x1tmc/TJMM-total/query', {
-      method: 'POST',
-      headers: {
-          'accept': 'application/json, text/javascript, */*; q=0.01',
-          'accept-language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
-          'X-API-Key': 'd03x1tmc_W5c3GdBzPdH2MToY3rJ2BjFd4haMfjGK',
-          'Content-Type': 'application/json',
-          'Authority':  'database.deta.sh',
-          'Accept-Language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
-          'Cache-Control': 'no-cache',
-          'Connection': 'keep-alive',
-          'Pragma': 'no-cache',
-          'Referer': 'https://database.deta.sh/',
-          'Sec-Fetch-Dest': 'empty',
-          'Sec-Fetch-Mode': 'no-cors',
-          'Sec-Fetch-Site': 'none',
-          'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
-          'accept': 'text/html',
-          'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
-          'sec-ch-ua-mobile': '?0'
-      },
-      body: JSON.stringify({})
-    });
-    var data = await response.text();
-    console.log('response:' + response)
-
-    if (response.status==200) {
-        cont_div = document.getElementById("adv_sales_container");
-        cont_div.innerHTML = data;
-    }
-    else 
-    {
-      cont_div = document.getElementById("adv_sales_container");
-      cont_div.innerHTML = response;
-    }
-  }
-
   
-  // call func
-  getData();
-
-  /* When the user clicks on the button, 
-  toggle between hiding and showing the dropdown content */
+  /// When the user clicks on the button, toggle between hiding and showing the dropdown content
   function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
   }
@@ -398,6 +510,8 @@ display: block;
       }
     }
   }
+
+  
 </script>
 
 

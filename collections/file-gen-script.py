@@ -82,7 +82,7 @@ for dirs in directory_list:
         except Exception as e:
             image_src = '/images/image-1.png'
             #print('image',e)
-            break 
+            #continue 
         #print(title , '->' , rel_file)
 
         link_image = '''<div class="card_image"> <a href="/''' + rel_file1 + ''' ">

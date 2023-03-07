@@ -3,3 +3,11 @@ gitbash.sh
 test.html
 *.py
 index-old.html
+delete.css
+.vscode
+__pycache__
+
+**/index-old.html
+**/del.html
+**/test.html
+**/__pycache__

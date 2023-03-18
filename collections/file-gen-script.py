@@ -80,8 +80,16 @@ for dirs in directory_list:
             title=rel_file1 #''
             #print('title',e)
         if title == 'Box Office India - Pan India collection reports':
-            continue
+            #continue
+            try:
+                p_head = soup.find(id="p_heading")
+                title = p_head.getText()
+            except:
+                #print('p_heading error',p_head , rel_file1)
+                #title = 'Collection reports - Box Office Pan India'
+                title = name.replace('.html','')
         title = (title.replace("- Box Office Pan India","")).strip()
+        title = (title.replace("- @Box_OfficeTrack","")).strip()
         #image
         images = soup.findAll('img')
         try:

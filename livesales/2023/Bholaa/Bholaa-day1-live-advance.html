@@ -157,7 +157,7 @@
 
 <!-- tweet share button-->  
     <a class="twitter-share-button"
-        href="https://twitter.com/intent/tweet?text=#Bholaa Day 1Live Advance sales%0AReport inside👇%0A#BholaaIn3D #BholaaOn30thMarch #AjayDevgan #Tabu #AmalaPaul #BholaaAdvanceSales &amp;url=https://boxofficeindia.github.io/livesales/2023/Bholaa/Bholaa-day1-live-advance.html" 
+        href="https://twitter.com/intent/tweet?text=#Bholaa Day 1 Live Advance sales%0AReport inside👇%0A#BholaaIn3D #BholaaOn30thMarch #AjayDevgan #Tabu #AmalaPaul #BholaaAdvanceSales &amp;url=https://boxofficeindia.github.io/livesales/2023/Bholaa/Bholaa-day1-live-advance.html" 
         data-size="large" target="_top" rel="nofollow">
     Tweet</a><div style="width:100%; padding-top: 1%; padding-bottom: 3%;">
     <img src="/images/2023/bollywood/bholaa/bholaa.jpg" alt="Bholaa Poster" style="width:100%;height:275px;">
@@ -311,13 +311,16 @@
     async function getData()
     {
       
-     cache_meth = "reload";
+      cache_meth = "reload";
   query_url="https://database.deta.sh/v1/d03x1tmc/Live-advsales-all/query";
 
+      //sample query {"Movie Name": "Bholaa" , "day_no":1}
+      query =[{'Movie Name': 'Bholaa', 'day_no': 1}]
+      json_payload = {"query" : query}
       var response = await fetch(query_url, {
         method: 'POST',
         headers: headers,
-        body: JSON.stringify({}),
+        body: JSON.stringify(json_payload) ,
         cache:cache_meth ,
       });
       var currentTime = new Date();

@@ -311,13 +311,16 @@
     async function getData()
     {
       
-     cache_meth = "reload";
+      cache_meth = "reload";
   query_url="https://database.deta.sh/v1/d03x1tmc/Live-advsales-all/query";
 
+      //sample query {"Movie Name": "Bholaa" , "day_no":1}
+      query =[{'Movie Name': 'Dasara', 'day_no': 1}]
+      json_payload = {"query" : query}
       var response = await fetch(query_url, {
         method: 'POST',
         headers: headers,
-        body: JSON.stringify({}),
+        body: JSON.stringify(json_payload) ,
         cache:cache_meth ,
       });
       var currentTime = new Date();

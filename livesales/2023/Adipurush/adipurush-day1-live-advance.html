@@ -176,6 +176,7 @@
       <select style="display: inline-block;" name="States" id="state_dropdown" value="1" onchange="getData()" >
         <option value="1"  >India - Top states</option>
         <option value="2">India - Top cities</option>
+        <option value="3">India - Language & Version wise</option>
       </select>
       <div style="display: inline-block;" id = "tsap_dp_div"></div>
       <!--<script>custom_drop()</script>-->
@@ -355,13 +356,16 @@
           Occupancy : ` + total_data['Overall Occupancy'] + `% <br>
           Total Tickets Sold : ` + total_sold_tickets + ` <br> 
           Fastfilling/Soldout  : ` + total_data['Fastfilling Count'] + ' FF & ' + total_data['Housefull Count'] + ' HF <br>' + `
-        </div>
+          (Including Block seats) India Adv Gross : Rs ` + total_data['With block Approx gross'] + `<br> 
+          </div>
         <div></div>
       `;
       
       console.log(total_html)
       city_html = total_data['html_city_table'].trim()
       state_html = total_data['html_state_table'].trim()
+      lang_html = total_data['html_language_table'].trim()
+      version_html = total_data['html_version_table'].trim()
       //console.log(state_html)
   
       /*
@@ -379,6 +383,14 @@
       if (state_id.toString() == "1")
       {
         output_html = state_html + total_html
+      }
+      else if (state_id.toString() == "2")
+      {
+        output_html = city_html + total_html
+      }
+      else if (state_id.toString() == "3")
+      {
+        output_html = lang_html + version_html + total_html
       }
       else{
         output_html = city_html + total_html

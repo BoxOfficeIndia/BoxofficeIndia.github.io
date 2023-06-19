@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <style>
+    .dropdown
+    {
+      background-color: #f5f5f5;
+      border: #dbd7d2;
+      padding: 1%;
+    }
+  </style>
+  <body>
+    <label for="date">Date</label>
+    <input class="dropdown" type="date" id="date" name="select_date" min="2023-01-01" value="2023-06-16">
+    
+    <p style="display: inline-block;"> Select Region</p>
+    <select  class="dropdown" style="display: inline-block;" name="States" id="state_dropdown" value="1" onchange="getData()" >
+      <option value="1">India</option>
+      <option value="2">Telugu States (TS-AP)</option>
+      <option value="3">TamilNadu</option>
+      <option value="4">Karnataka</option>
+      <option value="5">Kerala</option>
+      <option value="6">North India</option>
+    </select>
+
+    <!--
+    <div id="live_gross_container" style="width: 100%;"> </div>
+    -->
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        //console.log('loaded');
+        getData();
+    });
+    </script>
+  </body>
+    
+
+  <script>
+  // api
+  headers={}
+  headers = {
+           'accept': 'application/json, text/javascript, */*; q=0.01',
+           'accept-language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
+           'X-API-Key': 'd03x1tmc_W5c3GdBzPdH2MToY3rJ2BjFd4haMfjGK',
+           'Content-Type': 'application/json',
+          'Authority':  'database.deta.sh',
+         'Accept-Language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
+  //       'Cache-Control': 'must-revalidate, no-cache, max-age=12, no-store',
+  //         //'Connection': 'keep-alive',
+  //         'Pragma': 'no-cache',
+  //         'Expires':'0',
+  //         'Referer': 'https://database.deta.sh/',
+  //         'Sec-Fetch-Dest': 'empty',
+           'Sec-Fetch-Mode': 'no-cors',
+  //         'Sec-Fetch-Site': 'none',
+          'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+  //         'accept': 'text/html',
+  //         'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
+  //         'sec-ch-ua-mobile': '?0'*/
+   }
+      
+    async function getData()
+    {
+
+    
+      cache_meth = "reload";
+  query_url="https://database.deta.sh/v1/d03x1tmc/Adipurush-total-coll/query";
+
+      //sample query [{"Show Date":"29 March 2023"}]
+      query = [{"Show Date":"19 June 2023"}]
+      json_payload = {"query" : query}
+      var response = await fetch(query_url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(json_payload) ,
+        cache:cache_meth ,
+      }); 
+     
+     var currentTime = new Date();
+      var currentOffset = currentTime.getTimezoneOffset();
+      var ISTOffset = 330;   // IST offset UTC +5:30 
+      var ISTTime = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);
+      //alert('fetch_time' + response.status+ ISTTime )
+
+      if (response.status!=200) {
+        cont_div = document.getElementById("live_gross_container");
+        cont_div.innerHTML = response;
+        return;
+      }
+      var data = await response.text();
+      //console.log('response:' + response + response.status)
+      data = JSON.parse(data)
+      //console.log(data)
+      data = data.items
+
+      //filtering today's date data
+      //today_date = String(ISTTime.getFullYear()) + '-' + String(ISTTime.getMonth()) + '-' + String(ISTTime.getDate()) + ' 00:00:00'
+      var startDate = new Date("2023-06-19 00:00:00");//.toLocaleString("en-US", {timeZone: 'Asia/Kolkata'}) 
+      var endDate = new Date("2023-06-20 00:00:00");//.toLocaleString("en-US", {timeZone: 'Asia/Kolkata'});
+      console.log(startDate, endDate)
+
+       //this date based filter function doesn't work in iphone browsers / safari 
+      //(filter wont work so give dates in api query only)
+      /* data = data.filter(a => {
+          var date = new Date(a.fetch_time);
+          return (date >= startDate && date < endDate); 
+      });*/
+      //console.log('filtered data:') //console.log(data)
+
+      
+      //this date based sort function doesn't work in iphone browsers / safari 
+      //new modified function added below
+      /*
+      data.sort(function(a, b) {
+        const date1 = new Date(a['fetch_time']);
+        const date2 = new Date(b['fetch_time']);
+        return date2 - date1;;
+      });
+      */
+      
+      function getMonthNumberFromName(monthName) {
+        return new Date(`${monthName} 1, 2022`).getMonth();
+      }
+
+      function datestring_toDate(date_string)
+      {
+        //aa = '12:00:26 29 March 2023' //date_string
+        aa1 = date_string.split(" ")
+        aa_time = aa1[0].split(':')
+        aa_hr = aa_time[0]
+        aa_min = aa_time[1]
+        aa_sec = aa_time[2]
+        aa_day = aa1[1]
+        aa_month = aa1[2]
+        aa_year = aa1[3]
+        aa_month = getMonthNumberFromName(aa_month)
+        //console.log(aa_hr , aa_min, aa_sec, aa_day, aa_month, aa_year )
+        ff = new Date(aa_year, aa_month, aa_day, aa_hr, aa_min, aa_sec);//Constructs an date of the above parsed parts (Year,Month...
+        //console.log(ff)
+        return ff;
+      } 
+      
+      
+      data.sort(function(a, b) {
+        const date1 = datestring_toDate(a['fetch_time']);
+        const date2 = datestring_toDate(b['fetch_time']);
+        return date2 - date1;;         
+      });
+      //console.log(data)
+      total_data = data[0]
+      //console.log(total_data)
+      
+
+      fetch_time = total_data['fetch_time']
+      //alert(fetch_time)
+      //total_coll = Math.round(total_data['Total Tracked Gross']).toLocaleString('en-IN') //formatINR
+      total_coll = total_data['Total Tracked Gross']
+      coll_range = 'crores'
+      coll_div = 1e07
+      if (Number(total_coll) < 1e07) 
+      {
+        coll_range = 'lakhs'
+        coll_div = 1e05
+      }
+      //console.log(total_coll , coll_div)
+      total_coll = Math.round( (total_coll/coll_div) * 100)/100 //round to 2 decimal currency
+      
+      table_html = total_data['html_state_table'] 
+      total_html = `
+        <br>
+        <div id = 'tr_total' > ` + `
+        Total India Tracked Gross : Rs ` + total_coll.toString() + ' ' + coll_range + `<br> 
+          Tracked Shows : ` + total_data['Tracked Shows'] + `<br> 
+          Average Occupancy : ` + total_data['Average Occupancy'] + `% <br>
+        </div>
+        <div></div>
+      `;
+      
+      //ads
+      ad_html = ``
+
+      end_html = `<p style=font-size:14px>Note: 
+        1) Tracked data only; Actual gross collections will vary / be higher <br>
+        2) Rest of India will have untagged cities which most probably belong to one of the states in above list.<br>
+        3) Data Tracked through BMS,Paytm & other online portals + some offline estimate <br>
+        ` +`
+        <text style="color:red; font-weight:normal;"> Data Last tracked/fetched: ` + fetch_time + `</text>
+        </p>`
+
+      // write to div
+      cont_div = document.getElementById("live_gross_container");
+      cont_div.innerHTML = table_html + ad_html + total_html + end_html;
+
+      //console.log('yoooo' + state + state_id)
+      //return total_html, city_html , state_html
+
+    }
+    
+    // call func
+    //getData();
+    //drop_func()
+  
+    function drop_func()
+    {
+      var sd = document.getElementById("state_dropdown");
+      state = sd.options[sd.selectedIndex].text;
+      state_id = sd.value;
+      //console.log(state + state_id)
+  
+      //get data
+      /*
+      await total_html, city_html , state_html = getData();
+  
+      if (state_id.toString() == "1")
+      {
+        console.log("check " +  state_id + state );
+        output_html = state_html + total_html
+      }
+      else{
+        output_html = city_html + total_html
+      }
+  
+      // write to div
+      cont_div = document.getElementById("live_gross_container");
+      cont_div.innerHTML = output_html;
+      console.log('yoooo' + state + state_id)*/
+    }
+    function custom_drop()
+    {
+      var sd = document.getElementById("state_dropdown");
+      state = sd.options[sd.selectedIndex].text;
+      state_id = sd.value;
+  
+      if (state_id == "3")
+      {
+        div_el = document.getElementById("tsap_dp_div");
+        div_el.innerHTML = `<select id="tsap_dropdown" value="30" onchange="getData()">
+          <option value="30">TS-AP</option>
+          <option value="31">Telangana</option>
+          <option value="32">AndhraPradesh</option>
+        </select>`;
+        document.getElementById("state_dropdown").value="3";
+      }
+    }
+  
+    
+    /// When the user clicks on the button, toggle between hiding and showing the dropdown content
+    function myFunction() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+    
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+  </script>
+       
+</html> 

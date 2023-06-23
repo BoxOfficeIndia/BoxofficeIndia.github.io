@@ -44,6 +44,9 @@
 	</head>
 	
 	<style>
+		html, body{
+			background-color: white;
+		}
 		.dropdown
 		{
 			background-color: #f5f5f5;
@@ -54,28 +57,11 @@
 		{
 			border-collapse: collapse;
 			margin: 25px 0;
-			font-size: 0.9em;
+			font-size: 15px;
 			font-family: sans-serif;
 			min-width: 400px;
 			box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-		}
-		
-		#daily_table .sticky-col {
-			position: -webkit-sticky;
-			position: sticky;
-			background-color: white;
-		}
-		#daily_table .first-col {
-			width: 50px;
-			min-width: 50px;
-			max-width: 50px;
-			left: 0px;
-		}
-		#daily_table .second-col {
-			width: 100px;
-			min-width: 100px;
-			max-width: 100px;
-			left: 50px;
+			width: 100%;
 		}
 		#daily_table  th {
     	background-color: #009879;
@@ -109,8 +95,8 @@
 		.dt_btns {
 			border: none;
 			background-color: inherit;
-			padding: 5px;
-			font-size: 16px;
+			padding: 3px;
+			font-size: 13px;
 			cursor: pointer;
 			display: inline-block;
 		}
@@ -124,13 +110,47 @@
 		{
 			margin: 10px;
 			margin-top: 30px;
-			margin-bottom: 30px;
+			margin-bottom: 10px;
+			font-size: 15px;
 		}
+		#dropdown_row td {
+			text-align: center;
+		}
+		.droprow_btns{
+			border-radius: 0;
+			background-color: #dbd7d2;
+		}
+		#refresh_btn{
+			font-family: Lucida Sans Unicode;
+			font-size: 45px;
+			cursor: pointer;
+			border: none;
+			padding: none;
+			background: none;
+		}
+		#region_dropdown
+		{
+			width: 50%;
+			font-size: 20px;
+		}
+		#date_select
+		{
+			width: 50%;
+			font-size: 20px;
+		}
+		.ad_div{
+			border: 2px solid red;
+			padding: 5px;
+			margin-top: none;
+		}
+		
 		@media only screen and (max-width: 480px) {
 			/* horizontal scrollbar for tables if mobile screen */
 			#daily_table {
 					overflow-x: auto;
 					display: block;
+					font-size: 13px;
+					margin: 5px;
 			}
 			#top_row{
 				background-color: #16161d;
@@ -139,12 +159,29 @@
 			}
 			#navpoint
 			{border: 3px solid #563c5c; padding: 0px}
+			.droprow_btns{border-radius: 0;}
+			#region_dropdown{width: 85%; margin-left: 5%; margin-right: 5%;}
+			#dropdown_row_col1{width: 40%;}
+			#dropdown_row_col2{width: 50%;}
+			#dropdown_row_col3{width: 10%; margin: 0%; padding: 0%;}
+			#daily_heading{font-size: 20px;}
+			#date_arrows{text-align: left; font-size: 10px;}
+			#refresh_btn{font-size: 20px; padding: none; margin: none;}
+			#scroll_arr{text-align: right;}
+			#region_dropdown{font-size: 15px;}
+			#date_select{font-size: 15px;}
+			/*on mobile freeze 1st two rows*/
+			#daily_table .sticky-col {position: -webkit-sticky;position: sticky;background-color: white;}
+			#daily_table .first-col {width: 50px;min-width: 50px;max-width: 50px;left: 0px;}
+			#daily_table .second-col {width: 100px;min-width: 100px;max-width: 100px;left: 50px;}
     } 
     @media only screen and (max-width: 720px) {
 			/* horizontal scrollbar for tables if mobile screen */
 			#daily_table {
 					overflow-x: auto;
 					display: block;
+					font-size: 13px;
+					margin: 5px;
 			}
 			#top_row{
 				background-color: #16161d;
@@ -153,6 +190,21 @@
 			}
 			#navpoint
 			{border: 3px solid #563c5c; padding: 0px}
+			.droprow_btns{border-radius: 0;}
+			#region_dropdown{width: 85%; margin-left: 5%; margin-right: 5%;}
+			#dropdown_row_col1{width: 40%;}
+			#dropdown_row_col2{width: 50%;}
+			#dropdown_row_col3{width: 10%; margin: 0%; padding: 0%;}
+			#daily_heading{font-size: 20px;}
+			#date_arrows{text-align: left; font-size: 10px;}
+			#refresh_btn{font-size: 20px; padding: none; margin: none;}
+			#scroll_arr{text-align: right;}
+			#region_dropdown{font-size: 15px;}
+			#date_select{font-size: 15px;}
+			/*on mobile freeze 1st two rows*/
+			#daily_table .sticky-col {position: -webkit-sticky;position: sticky;background-color: white;}
+			#daily_table .first-col {width: 50px;min-width: 50px;max-width: 50px;left: 0px;}
+			#daily_table .second-col {width: 100px;min-width: 100px;max-width: 100px;left: 50px;}
 		}
 	</style>
 
@@ -169,19 +221,24 @@
 		
 		<div class = "heading_class" id="daily_heading"></div>
 
-		<!--
+		
 		<table id = "dropdown_row" style="width: 100%;">
+			<colgroup>
+				<col span="1" id="dropdown_row_col1">
+				<col span="1" id="dropdown_row_col2">
+				<col span="1" id="dropdown_row_col3">
+			</colgroup>
 			<tr>
-				<td><label for="date">Select Date</label></td>
-				<td><label for="state_dropdown">Select Region</label></td>
+				<td ><label for="date">Select Date</label></td>
+				<td ><label for="region_dropdown">Select Region</label></td>
 				<td></td>
 			</tr>
 			<tr>
 				<td>
-					<input class="dropdown" type="date" id="date_select" name="select_date" min="2023-01-01" onchange="getData()">
+					<input class="dropdown droprow_btns" type="date" id="date_select" name="select_date" min="2023-01-01" onchange="getData()">
 				</td>
 				<td>
-					<select  class="dropdown" style="display: inline-block;" name="States" id="state_dropdown" value="1" onchange="getData()" >
+					<select class="dropdown droprow_btns" name="States" id="region_dropdown" value="1" onchange="getData()" >
 						<option value="1">India</option>
 						<option value="2">Telugu States (TS-AP)</option>
 						<option value="3">TamilNadu</option>
@@ -190,39 +247,21 @@
 						<option value="6">North India</option>
 					</select>
 				</td>
-				<td>
-					<button style="display: inline-block;" type="button" onclick="getData()">Refresh Data</button>
-				</td>
+				<!--<td><button id="refresh_btn"  type="button" onclick="getData()">&#x21bb;</button></td>-->
 			</tr>
-				<td>
-					<button class='dt_btns' id='prev_date' style="color:#007185" onclick="prev_date_func()"> << Prev</button>
-					<button class='dt_btns' id='next_date' style="color:#007185" onclick="next_date_func()"> Next >> </button>
+				<td id ="date_arrows">
+					<button class='dt_btns' id='prev_date' style="color:#007185;" onclick="prev_date_func()"> << Prev</button>
+					<button class='dt_btns' id='next_date' style="color:#007185;" onclick="next_date_func()"> Next >> </button>
 				</td>	
+				<td>
+					<button class='dt_btns' id="scorll_arr" style="color:#007185; font-size: 12px;" > Scroll right >> </button>
+				</td>	
+				
 			<tr>
 
 			</tr>
 		</table>
-		-->
-
 		
-		<label for="date">Select Date</label>
-		<button class='dt_btns' id='prev_date' style="color:#007185" onclick="prev_date_func()"> << Prev</button>
-		<input class="dropdown" type="date" id="date_select" name="select_date" min="2023-01-01" onchange="getData()">
-		<button class='dt_btns' id='next_date' style="color:#007185" onclick="next_date_func()"> Next >> </button>
-		
-		<label for="state_dropdown">Select Region</label>
-		<select class="dropdown" style="display: inline-block;" name="States" id="state_dropdown" value="1" onchange="getData()" >
-			<option value="1">India</option>
-			<option value="2">Telugu States (TS-AP)</option>
-			<option value="3">TamilNadu</option>
-			<option value="4">Karnataka</option>
-			<option value="5">Kerala</option>
-			<option value="6">North India</option>
-		</select>
-
-		<button style="display: inline-block;" type="button" onclick="getData()">Refresh Data</button>
-		
-	 
 		<div id="table_container" style="width: 100%; overflow-x:auto;"> </div>
 
 		<div class="modal" id="myModal">
@@ -247,6 +286,64 @@
 		</div>
 		
 
+		<!-- ads -->
+		<p style="text-align: center; margin-top: 10px; padding-top: 10px; margin-bottom: 0px;">--Advertisement--</p>
+		<div class="ad_div">
+			<script type="text/javascript">
+				atOptions = {
+					'key' : '9002fc31278d2d205cf1b48fa8d9b11e',
+					'format' : 'iframe',
+					'height' : 50,
+					'width' : 320,
+					'params' : {}
+				};
+				document.write('<scr' + 'ipt type="text/javascript" src="http' + (location.protocol === 'https:' ? 's' : '') + '://www.effectivecreativeformat.com/9002fc31278d2d205cf1b48fa8d9b11e/invoke.js"></scr' + 'ipt>');
+			</script>
+		</div>
+
+		<div style="padding: 2%; margin: 2%;">
+			<p>Note:<br>
+				1) 'cr': All gross numbers in crores INR<br> 
+				2) 'L': indicates footfalls in Lakhs <br>
+				3) Date updates in realtime - 24x7 online tracking system<br>
+				4) Change % is a compatabile metric at EOD only 
+			</p>
+			</p>
+		</div>
+
+		<!-- ads -->
+		<p style="text-align: center; margin-top: 10px; padding-top: 10px; margin-bottom: 0px;">--Advertisement--</p>
+		<div class="ad_div"> <div id="container-eb11d11fa1fb3730ecf9912917e6e437"></div> </div>
+
+		<p>
+			<span style="color: #cc0000;">Disclaimer:</span>
+			<span style="color: #0b5394;">The box office figures are compiled from various sources.  
+			We make every effort to verify the data but we do not take any ownership or authenticity about box office data.
+			These numbers might vary from original producer or distributor numbers but they are an indication of how a movie was performed.
+			Use at your own discretion
+			</span>
+		</p>
+
+		<footer id="about"  > 
+			<div id="about1">
+					Copyright © 2022 Box Office Pan India
+			</div>
+			<div id="about1">
+					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+					<!--<button onclick = "window.open('https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=boxofficetrackindia@gmail.com', '_blank');return false;"> Email
+					</button>-->
+					<a href="https://twitter.com/Box_OfficeTrack?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @Box_OfficeTrack</a>	
+			</div>
+			<div id="about2">
+					<a href="/site data/about.html">About Us</a> &nbsp;|&nbsp; 
+					<a href="/site data/disclaimer.html">Disclaimer</a> &nbsp;|&nbsp; 
+					<a href="/site data/privacy-policy.html">Privacy Policy</a> &nbsp; |&nbsp;
+					<a href = "https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=boxofficetrackindia@gmail.com" target="_blank" rel="noreferrer noopener"> 
+							Contact Us </a>
+			</div>
+		</footer>
+		<br>
+
 		<script>
 			//date
 			document.getElementById('date_select').valueAsDate = new Date();
@@ -259,8 +356,9 @@
 			//daily heading
 			function daily_heading()
 			{
-				reg_txt = document.getElementById('state_dropdown')
+				reg_txt = document.getElementById('region_dropdown')
 				reg_txt = reg_txt.options[reg_txt.selectedIndex].text
+				reg_txt = reg_txt.split('(')[0]
 				dt_txt = document.getElementById('date_select').value
 				date_dt = new Date(dt_txt)
 				dt_txt = date_dt.toLocaleString("en-GB", {day: "numeric", month: "short",year: "numeric",});
@@ -356,7 +454,7 @@
 			daily_heading()
 			//params
 			date_str = document.getElementById('date_select').value //'2023-06-16'
-			region_val= document.getElementById('state_dropdown').value;
+			region_val= document.getElementById('region_dropdown').value;
 			console.log('date_str' , date_str , 'select state' , region_val)
 			cache_meth = "reload";
 			base_url = 'http://127.0.0.1:8001'
@@ -380,14 +478,14 @@
 			catch(err)
 			{
 				cont_div = document.getElementById("table_container");
-				cont_div.innerHTML = 'no-data'
+				cont_div.innerHTML = '<p style="text-align:center;font-weight:bold;font-size:20px;">no-data</p>';
 				return;
 			}
 			//.then( response => response.json() )
 			//.then( response => {console.log(response)} );
 			if (response.status!=200) {
 				cont_div = document.getElementById("table_container");
-				cont_div.innerHTML = 'no-data';
+				cont_div.innerHTML = '<p style="text-align:center;font-weight:bold;font-size:20px;">no-data</p>';
 				return;
 			}
 
@@ -396,54 +494,60 @@
 			//console.log(data)
 			init_table_html = '<table id= "daily_table">'
 			non_sort_ids = [1]
-			header_list = ['Rank' , 'Movie' , 'Release Date', 'Day count',]
+			header_list = ['Rank' , 'Movie' , 'Release Date', 'Day No.',]
 			data_columns =[ 'Rank' , 'Movie',  'Release date', 'Day count', ]
 			if (end_point=='india')
 			{
-				header_list = header_list.concat(['Tracked gross <br>(in crore)', 'Tracked Shows', 'Change','Tracked Footfalls <br>(in Lakh)',
-				 'Actual India Gross <br>(in crore)', 'Aggregate Tracked gross <br>(in crore)', 'Aggregate Actual gross<br>(in crore)', 
-				 'Aggreagte Footfalls <br>(in Lakh)', 'Showdown'])
+				header_list = header_list.concat(['Tracked Gross', 'Tracked Shows', 'Change','Tracked Footfalls',
+				 'Actual India Gross', 'Aggregate Tracked Gross', 'Aggregate Actual Gross', 
+				 'Aggreagte Footfalls', 'Showdown'])
 				data_columns = data_columns.concat(['Tracked India Gross' , 'Tracked Shows' , 'Change' , 
 					'Tracked Footfalls', 'Actual India gross', 'Aggregate Tracked India Gross',
 					 'Aggreagte Actual India Gross', 'Aggreagte Actual Footfalls',
 				])
-				
-				table_html = create_table_withview(data, header_list, data_columns, non_sort_ids, init_table_html) 
+				gr_cols = [4,8,9,10] //gross in cr/crore
+				ff_cols = [7,11] //footfall in Lakh/L
+				table_html = create_table_withview(data, header_list, data_columns, non_sort_ids, init_table_html, gr_cols, ff_cols) 
 			}
 			else if (end_point=='tsap')
 			{
-				header_list = header_list.concat(['TS-AP Tracked gross <br>(in crore)', 'Tracked Footfalls', 'Telugu Lang Gross <br>(in crore)',])	//'Tracked Shows' , 'Change','Showdown'
+				header_list = header_list.concat(['TS-AP Tracked gross', 'Tracked Footfalls', 'Telugu Lang Gross',])	//'Tracked Shows' , 'Change','Showdown'
 				//'Actual India Gross', 'Aggregate Tracked gross', 'Aggregate Actual gross',
 				data_columns = data_columns.concat(['Telugu States Gross', 'Telugu States FF_tr',  'Telugu Gross',])
-				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html) 
+				gr_cols = [4,6] //gross in cr/crore
+				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html , gr_cols) 
 			}
 			else if (end_point=='tamilnadu')
 			{
-				header_list = header_list.concat(['TN Tracked gross <br>(in crore)', 'Tracked Footfalls', 'Tamil Lang Gross <br>(in crore)'])	//'Tracked Shows' , 'Change','Showdown'	
+				header_list = header_list.concat(['TN Tracked gross', 'Tracked Footfalls', 'Tamil Lang Gross'])	//'Tracked Shows' , 'Change','Showdown'	
 				data_columns = data_columns.concat(['TamilNadu Gross', 'TamilNadu FF_tr', 'Tamil Gross',])
-				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html) 
+				gr_cols = [4,6] //gross in cr/crore
+				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html , gr_cols)
 			}
 			else if (end_point=='karnataka')
 			{
-				header_list = header_list.concat(['KA Tracked gross <br>(in crore)', 'Tracked Footfalls', 'Kannada Gross <br>(in crore)'])	//'Tracked Shows' , 'Change','Showdown'	
+				header_list = header_list.concat(['KA Tracked gross', 'Tracked Footfalls', 'Kannada Gross'])	//'Tracked Shows' , 'Change','Showdown'	
 				data_columns = data_columns.concat(['Karnataka Gross', 'Karnataka FF_tr', 'Kannada Gross'])
-				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html) 
+				gr_cols = [4,6] //gross in cr/crore
+				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html , gr_cols)
 			}
 			else if (end_point=='kerala')
 			{
-				header_list = header_list.concat(['KL Tracked gross <br>(in crore)', 'Tracked Footfalls', 'Malayalam Gross <br>(in crore)'])	//'Tracked Shows' , 'Change','Showdown'	
+				header_list = header_list.concat(['KL Tracked gross', 'Tracked Footfalls', 'Malayalam Gross'])	//'Tracked Shows' , 'Change','Showdown'	
 				data_columns = data_columns.concat(['Kerala Gross', 'Kerala FF_tr', 'Malayalam Gross', ])
-				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html) 
+				gr_cols = [4,6] //gross in cr/crore
+				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html , gr_cols)
 			}
 			else if (end_point=='roi')
 			{
-				header_list = header_list.concat(['ROI Tracked gross <br>(in crore)', 'Tracked Footfalls', 'Hindi Gross <br>(in crore)'])	//'Tracked Shows' , 'Change','Showdown'	
+				header_list = header_list.concat(['ROI Tracked gross', 'Tracked Footfalls', 'Hindi Gross'])	//'Tracked Shows' , 'Change','Showdown'	
 				data_columns = data_columns.concat(['ROI Gross', 'ROI FF_tr', 'Hindi Gross', ])
-				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html) 
+				gr_cols = [4,6] //gross in cr/crore
+				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html , gr_cols) 
 			}
 			else
 			{
-				table_html ='no-data'
+				table_html ='<p style="text-align:center;font-weight:bold;font-size:20px;">no-data</p>'
 			}
 		
 			cont_div = document.getElementById("table_container");
@@ -453,7 +557,7 @@
 		}
 		
 		//function - create table from data
-		function create_table(data, header_list, data_columns, non_sort_ids, init_table_html) //div_id,
+		function create_table(data, header_list, data_columns, non_sort_ids, init_table_html, gr_cols=[], ff_cols=[]) //div_id,
 		{
 			table_html = init_table_html
 			len = data.length;
@@ -491,6 +595,8 @@
 					column_name = data_columns[j]
 					dt_r = j_data[column_name]
 					if (dt_r == undefined){dt_r='-'}
+					else if (gr_cols.includes(j)){dt_r = dt_r + 'cr'}
+					else if (ff_cols.includes(j)){dt_r = dt_r + ' L'}
 					if (j==0) 
 					{
 						td_html += '<td  class="sticky-col first-col" >' + dt_r + '</td>'
@@ -513,7 +619,7 @@
 		}
 
 		//function - create table with view button
-		function create_table_withview(data, header_list, data_columns, non_sort_ids, init_table_html) //div_id,
+		function create_table_withview(data, header_list, data_columns, non_sort_ids, init_table_html, gr_cols=[], ff_cols=[]) //div_id,
 		{
 			table_html = init_table_html 
 			len = data.length;
@@ -549,17 +655,19 @@
 					column_name = data_columns[j]
 					dt_r = j_data[column_name]
 					if (dt_r == undefined){dt_r='-'}
+					else if (gr_cols.includes(j)){dt_r = dt_r + 'cr'}
+					else if (ff_cols.includes(j)){dt_r = dt_r + ' L'}
 					if (j==0) 
-				{
-					td_html += '<td  class="sticky-col first-col" >' + dt_r + '</td>'
-				}
-				else if (j==1) 
-				{
-					td_html += '<td  class="sticky-col second-col" >' + dt_r + '</td>'
-				}
-				else{
-					td_html += '<td>' + dt_r + '</td>'
-				}
+					{
+						td_html += '<td  class="sticky-col first-col" >' + dt_r + '</td>'
+					}
+					else if (j==1) 
+					{
+						td_html += '<td  class="sticky-col second-col" >' + dt_r + '</td>'
+					}
+					else{
+						td_html += '<td>' + dt_r + '</td>'
+					}
 					//break
 				}
 				//add button to display modal breakdown table
@@ -580,6 +688,8 @@
 		//function - sort columns in table
 		function sortTable(n) {
 			text_sort_ids = [1]
+			gr_cols = [4,8,9,10]
+			ff_cols = [7,11]
 			var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
 			table = document.getElementById("daily_table");
 			switching = true;
@@ -608,8 +718,23 @@
 						
 						if (text_sort_ids.includes(n))
 						{cond = x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()} //text based sort
+						
 						else
-						{cond = Number(x.innerHTML) > Number(y.innerHTML)} //number based sort
+						{
+							xh = x.innerHTML
+							yh = y.innerHTML
+							if(gr_cols.includes(n))
+							{
+								xh = xh.replace('cr','')
+								yh = yh.replace('cr','')
+							}
+							else if(ff_cols.includes(n))
+							{
+								xh = xh.replace(' L','')
+								yh = yh.replace(' L','')
+							}
+							cond = Number(xh) > Number(yh)
+						} //number based sort
 						if(cond)
 						{
 							shouldSwitch= true;//if so, mark as a switch and break the loop:
@@ -620,10 +745,25 @@
 						//if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) 
 						//if (Number(x.innerHTML) < Number(y.innerHTML) )
 
+				
 						if (text_sort_ids.includes(n))
 						{cond = x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()} //text based sort
 						else
-						{cond = Number(x.innerHTML) < Number(y.innerHTML)} //number based sort
+						{
+							xh = x.innerHTML
+							yh = y.innerHTML
+							if(gr_cols.includes(n))
+							{
+								xh = xh.replace('cr','')
+								yh = yh.replace('cr','')
+							}
+							else if(ff_cols.includes(n))
+							{
+								xh = xh.replace(' L','')
+								yh = yh.replace(' L','')
+							}
+							cond = Number(xh) < Number(yh)
+						} //number based sort
 						if(cond)
 						{
 							shouldSwitch= true;//if so, mark as a switch and break the loop:
@@ -666,7 +806,7 @@
         cache:"reload" ,
       });
 			if (response.status!=200) {
-				document.getElementById("modal_table").innerHTML = 'no-data'
+				document.getElementById("modal_table").innerHTML = '<p style="text-align:center;font-weight:bold;font-size:20px;">no-data</p>'
 				return;
 			}
 			//data
@@ -675,9 +815,9 @@
 			//console.log('data',data)
 			len = data.length;
 			
-			header_list = ['Day count', 'Tracked gross <br>(in crore)'] // , 'Actual India Gross <br>(in crore)',
+			header_list = ['Day count', 'Tracked gross <br>(in crore)'] // , 'Actual India Gross',
 			data_columns =[ 'Day count' , 'Tracked India Gross'] //'Actual India gross',  
-			init_table_html = '<table class="table table-striped" id= "daily_table" style="margin:1px">'
+			init_table_html = '<table class="table table-striped" id= "daily_table" style="margin:1px; width:100%;">'
 
 			table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html)
 			modal_div = document.getElementById("modal_table");
@@ -685,50 +825,6 @@
 			return
 		}
 
-		function drop_func()
-		{
-			var sd = document.getElementById("state_dropdown");
-			state = sd.options[sd.selectedIndex].text;
-			state_id = sd.value;
-			//console.log(state + state_id)
-
-			//get data
-			/*
-			await total_html, city_html , state_html = getData();
-
-			if (state_id.toString() == "1")
-			{
-				console.log("check " +  state_id + state );
-				output_html = state_html + total_html
-			}
-			else{
-				output_html = city_html + total_html
-			}
-
-			// write to div
-			cont_div = document.getElementById("live_gross_container");
-			cont_div.innerHTML = output_html;
-			console.log('yoooo' + state + state_id)*/
-		}
-		function custom_drop()
-		{
-			var sd = document.getElementById("state_dropdown");
-			state = sd.options[sd.selectedIndex].text;
-			state_id = sd.value;
-
-			if (state_id == "3")
-			{
-				div_el = document.getElementById("tsap_dp_div");
-				div_el.innerHTML = `<select id="tsap_dropdown" value="30" onchange="getData()">
-					<option value="30">TS-AP</option>
-					<option value="31">Telangana</option>
-					<option value="32">AndhraPradesh</option>
-				</select>`;
-				document.getElementById("state_dropdown").value="3";
-			}
-		}
-
-			
 		/// When the user clicks on the button, toggle between hiding and showing the dropdown content
 		function myFunction() {
 			document.getElementById("myDropdown").classList.toggle("show");
@@ -747,31 +843,11 @@
 				}
 			}
 		}
-	
-	
-	/*Actual Footfalls"
-1: "Actual India gross"
-2: "Change"
-3: "Date"
-4: "Day count"
-5: "English Gross"
-6: "Hindi Gross"
-7: "Kannada Gross"
-8: "Karnataka Gross"
-9: "Kerala Gross"
-10: "Malayalam Gross"
-11: "Movie"
-12: "Release date"
-13: "Tamil Gross"
-14: "TamilNadu Gross"
-15: "Telugu Gross"
-16: "Telugu States Gross"
-17: "Tracked Footfalls"
-18: "Tracked India Gross"
-19: "Tracked Shows"
-20: "fetch_time"
-21: "key"
-*/
+		
+		/* header_list = header_list.concat(['Tracked gross', 'Tracked Shows', 'Change','Tracked Footfalls <br>(in Lakh)',
+				 'Actual India Gross', 'Aggregate Tracked gross', 'Aggregate Actual gross<br>(in crore)', 
+				 'Aggreagte Footfalls <br>(in Lakh)', 'Showdown'])
+		*/
 	</script>
 	
 	<script>
@@ -812,3 +888,21 @@
     }
 	</script>
 </html> 
+<!--
+		<label for="date">Select Date</label>
+		<button class='dt_btns' id='prev_date' style="color:#007185" onclick="prev_date_func()"> << Prev</button>
+		<input class="dropdown" type="date" id="date_select" name="select_date" min="2023-01-01" onchange="getData()">
+		<button class='dt_btns' id='next_date' style="color:#007185" onclick="next_date_func()"> Next >> </button>
+		
+		<label for="region_dropdown">Select Region</label>
+		<select class="dropdown" style="display: inline-block;" name="States" id="region_dropdown" value="1" onchange="getData()" >
+			<option value="1">India</option>
+			<option value="2">Telugu States (TS-AP)</option>
+			<option value="3">TamilNadu</option>
+			<option value="4">Karnataka</option>
+			<option value="5">Kerala</option>
+			<option value="6">North India</option>
+		</select>
+
+		<button style="display: inline-block;" type="button" onclick="getData()">Refresh Data</button>
+		-->

@@ -1,267 +1,515 @@
 <!DOCTYPE html>
-  <html lang="en">
-  <style>
-    .dropdown
-    {
-      background-color: #f5f5f5;
-      border: #dbd7d2;
-      padding: 1%;
-    }
-  </style>
-  <body>
-    <label for="date">Date</label>
-    <input class="dropdown" type="date" id="date" name="select_date" min="2023-01-01" value="2023-06-16">
-    
-    <p style="display: inline-block;"> Select Region</p>
-    <select  class="dropdown" style="display: inline-block;" name="States" id="state_dropdown" value="1" onchange="getData()" >
-      <option value="1">India</option>
-      <option value="2">Telugu States (TS-AP)</option>
-      <option value="3">TamilNadu</option>
-      <option value="4">Karnataka</option>
-      <option value="5">Kerala</option>
-      <option value="6">North India</option>
-    </select>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	</head>
+	<html lang="en">
+	<style>
+		.dropdown
+		{
+			background-color: #f5f5f5;
+			border: #dbd7d2;
+			padding: 1%;
+		}
+		#daily_table
+		{
+			border-collapse: collapse;
+			margin: 25px 0;
+			font-size: 0.9em;
+			font-family: sans-serif;
+			min-width: 400px;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+		}
+		#daily_table  th {
+    	background-color: #009879;
+    	color: #ffffff;
+    	text-align: left;
+		}
+		#daily_table th, #daily_table td {
+				padding: 12px 15px;
+		}
+		#daily_table tbody tr {
+				border-bottom: 1px solid #dddddd;
+		}
 
-    <!--
-    <div id="live_gross_container" style="width: 100%;"> </div>
-    -->
+		#daily_table tbody tr:nth-of-type(even) {
+				background-color: #f3f3f3;
+		}
 
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        //console.log('loaded');
-        getData();
-    });
-    </script>
-  </body>
-    
+		#daily_table tbody tr:last-of-type {
+				border-bottom: 2px solid #009879;
+		}
+		#daily_table tbody tr.active-row {
+				font-weight: bold;
+				color: #009879;
+		}
+	</style>
+	<body>
+		<label for="date">Select Date</label>
+		<input class="dropdown" type="date" id="date_select" name="select_date" min="2023-01-01" onchange="getData()">
+		<!-- value="2023-06-16" "onchange="handleChange"-->
+		
+		<p style="display: inline-block;"> Select Region</p>
+		<select  class="dropdown" style="display: inline-block;" name="States" id="state_dropdown" value="1" onchange="getData()" >
+			<option value="1">India</option>
+			<option value="2">Telugu States (TS-AP)</option>
+			<option value="3">TamilNadu</option>
+			<option value="4">Karnataka</option>
+			<option value="5">Kerala</option>
+			<option value="6">North India</option>
+		</select>
 
-  <script>
-  // api
-  headers={}
-  headers = {
-           'accept': 'application/json, text/javascript, */*; q=0.01',
-           'accept-language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
-           'X-API-Key': 'd03x1tmc_W5c3GdBzPdH2MToY3rJ2BjFd4haMfjGK',
-           'Content-Type': 'application/json',
-          'Authority':  'database.deta.sh',
-         'Accept-Language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
-  //       'Cache-Control': 'must-revalidate, no-cache, max-age=12, no-store',
-  //         //'Connection': 'keep-alive',
-  //         'Pragma': 'no-cache',
-  //         'Expires':'0',
-  //         'Referer': 'https://database.deta.sh/',
-  //         'Sec-Fetch-Dest': 'empty',
-           'Sec-Fetch-Mode': 'no-cors',
-  //         'Sec-Fetch-Site': 'none',
-          'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
-  //         'accept': 'text/html',
-  //         'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
-  //         'sec-ch-ua-mobile': '?0'*/
-   }
-      
-    async function getData()
-    {
+		<button style="display: inline-block;" type="button" onclick="getData()">Refresh Data</button>
 
-    
-      cache_meth = "reload";
-  query_url="https://database.deta.sh/v1/d03x1tmc/Adipurush-total-coll/query";
+		
+	 
+		<div id="table_container" style="width: 100%;"> </div>
 
-      //sample query [{"Show Date":"29 March 2023"}]
-      query = [{"Show Date":"19 June 2023"}]
+
+		
+		<div class="modal" id="myModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header" style="border-bottom: 0 none; padding:10px">
+						<!-- <h4 class="modal-title" id="'modal_heading"></h4> -->
+						<text style="font-weight: bold; text-align: center;" id="modal_heading"></text>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body" id ="modal_table" style="padding:1px">
+							
+					</div>
+					<!-- Modal footer -->
+					<div class="modal-footer" style="border-top: 0 none;">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+
+			
+	 
+
+		<script>
+			//date
+			document.getElementById('date_select').valueAsDate = new Date();
+			const handleChange = (event) => {
+				inputDate = event.target.value;
+			} 
+			document.addEventListener("DOMContentLoaded", function() {
+					//console.log('loaded');
+					getData();
+			});
+		</script>
+	</body>
+		
+
+	<script>
+		//options map
+		option_endpoint = {
+			"1": "india",
+			"2": "tsap",
+			"3": "tamilnadu",
+			"4": "karnataka",
+			"5": "kerala",
+			"6": "roi",
+		}
+		headers={}
+		headers = {
+			'accept': 'application/json, text/javascript, */*; q=0.01',
+			'accept-language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
+			'X-API-Key': 'd03x1tmc_W5c3GdBzPdH2MToY3rJ2BjFd4haMfjGK',
+			'Content-Type': 'application/json',
+			'Authority':  'database.deta.sh',
+			'Accept-Language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
+			'Sec-Fetch-Mode': 'no-cors',
+			'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+		}
+		
+		//function - to get main table data 
+		async function getData()
+		{
+			//params
+			date_str = document.getElementById('date_select').value //'2023-06-16'
+			region_val= document.getElementById('state_dropdown').value;
+			console.log('date_str' , date_str , 'select state' , region_val)
+			cache_meth = "reload";
+			base_url = 'http://127.0.0.1:8001' 
+			end_point = option_endpoint[region_val]
+			url = base_url + '/' + end_point
+			query_url = url + '?selected_date=' + date_str
+			console.log(query_url)
+
+			document.getElementById("table_container").innerHTML = ''
+			// query = [{"Show Date":"29 March 2023"}] //json_payload = {"query" : query}
+			try 
+			{
+				var response = await fetch(query_url, {
+					method: 'GET',
+					//headers: headers,
+					//body: JSON.stringify(json_payload) ,
+					cache:cache_meth ,
+				})
+			}
+			catch(err)
+			{
+				cont_div = document.getElementById("table_container");
+				cont_div.innerHTML = 'no-data'
+				return;
+			}
+			//.then( response => response.json() )
+			//.then( response => {console.log(response)} );
+			if (response.status!=200) {
+				cont_div = document.getElementById("table_container");
+				cont_div.innerHTML = 'no-data';
+				return;
+			}
+
+			//data
+			var data = await response.json();
+			//console.log(data)
+			init_table_html = '<table id= "daily_table">'
+			non_sort_ids = [1]
+			header_list = ['Rank' , 'Movie' , 'Release Date', 'Day count',]
+			data_columns =[ 'Rank' , 'Movie',  'Release date', 'Day count', ]
+			if (end_point=='india')
+			{
+				header_list = header_list.concat(['Tracked gross <br>(in crore)', 'Tracked Shows', 'Change','Tracked Footfalls <br>(in Lakh)',
+				 'Actual India Gross <br>(in crore)', 'Aggregate Tracked gross <br>(in crore)', 'Aggregate Actual gross<br>(in crore)',
+				'Showdown'])
+				data_columns = data_columns.concat(['Tracked India Gross' , 'Tracked Shows' , 'Change' , 
+					'Tracked Footfalls', 'Actual India gross', 'Aggregate Tracked gross', 'Aggregate Actual gross' , 
+				])
+				table_html = create_table_withview(data, header_list, data_columns, non_sort_ids, init_table_html) 
+			}
+			else if (end_point=='tsap')
+			{
+				header_list = header_list.concat(['TS-AP Tracked gross <br>(in crore)', 'Tracked Footfalls', 'Telugu Lang Gross <br>(in crore)',])	//'Tracked Shows' , 'Change','Showdown'
+				//'Actual India Gross', 'Aggregate Tracked gross', 'Aggregate Actual gross',
+				data_columns = data_columns.concat(['Telugu States Gross', 'Telugu States FF_tr',  'Telugu Gross',])
+				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html) 
+			}
+			else if (end_point=='tamilnadu')
+			{
+				header_list = header_list.concat(['TN Tracked gross <br>(in crore)', 'Tracked Footfalls', 'Tamil Lang Gross <br>(in crore)'])	//'Tracked Shows' , 'Change','Showdown'	
+				data_columns = data_columns.concat(['TamilNadu Gross', 'TamilNadu FF_tr', 'Tamil Gross',])
+				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html) 
+			}
+			else if (end_point=='karnataka')
+			{
+				header_list = header_list.concat(['KA Tracked gross <br>(in crore)', 'Tracked Footfalls', 'Kannada Gross <br>(in crore)'])	//'Tracked Shows' , 'Change','Showdown'	
+				data_columns = data_columns.concat(['Karnataka Gross', 'Karnataka FF_tr', 'Kannada Gross'])
+				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html) 
+			}
+			else if (end_point=='kerala')
+			{
+				header_list = header_list.concat(['KL Tracked gross <br>(in crore)', 'Tracked Footfalls', 'Malayalam Gross <br>(in crore)'])	//'Tracked Shows' , 'Change','Showdown'	
+				data_columns = data_columns.concat(['Kerala Gross', 'Kerala FF_tr', 'Malayalam Gross', ])
+				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html) 
+			}
+			else if (end_point=='roi')
+			{
+				header_list = header_list.concat(['ROI Tracked gross <br>(in crore)', 'Tracked Footfalls', 'Hindi Gross <br>(in crore)'])	//'Tracked Shows' , 'Change','Showdown'	
+				data_columns = data_columns.concat(['ROI Gross', 'ROI FF_tr', 'Hindi Gross', ])
+				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html) 
+			}
+			else
+			{
+				table_html ='no-data'
+			}
+		
+			cont_div = document.getElementById("table_container");
+			cont_div.innerHTML = table_html //+ ad_html + total_html + end_html;
+			return
+
+		}
+		
+		//function - create table from data
+		function create_table(data, header_list, data_columns, non_sort_ids, init_table_html) //div_id,
+		{
+			table_html = init_table_html
+			len = data.length;
+			header_html = '<tr>'
+			for (var i=0;i<header_list.length;i++)
+			{
+				// if (i in non_sort_ids.values()){header_html += '<th>'}
+				// else{header_html += '<th' + ' onclick="sortTable(' + i + ')" ' + '>'}
+				header_html += '<th' + ' onclick="sortTable(' + i + ')" ' + '>'
+				header_html += header_list[i] 
+				header_html += '</th>'
+			}
+			header_html += '</tr>'
+			table_html += header_html
+
+			for(var i=0;i<len;i++){
+				j_data = data[i]
+				//console.log(j_data)
+				//console.log(Object.keys(j_data))
+				row_html = '<tr>'
+				movie_name = j_data.Movie;
+				td_html = ''
+				for (j=0; j<data_columns.length; j++)
+				{
+					column_name = data_columns[j]
+					dt_r = j_data[column_name]
+					if (dt_r == undefined){dt_r='-'}
+					td_html += '<td>' + dt_r + '</td>'
+					//break
+				}
+				row_html += td_html
+				row_html += '</tr>'
+				table_html += row_html
+			}
+			table_html += '</table>'
+			return table_html
+		}
+
+		//function - create table with view button
+		function create_table_withview(data, header_list, data_columns, non_sort_ids, init_table_html) //div_id,
+		{
+			table_html = init_table_html 
+			len = data.length;
+			header_html = '<tr>'
+			for (var i=0;i<header_list.length;i++)
+			{
+				// if (i in non_sort_ids.values()){header_html += '<th>'}
+				// else{header_html += '<th' + ' onclick="sortTable(' + i + ')" ' + '>'}
+				header_html += '<th' + ' onclick="sortTable(' + i + ')" ' + '>'
+				header_html += header_list[i] 
+				header_html += '</th>'
+			}
+			header_html += '</tr>'
+			table_html += header_html
+
+			for(var i=0;i<len;i++){
+				j_data = data[i]
+				//console.log(j_data)
+				//console.log(Object.keys(j_data))
+				row_html = '<tr>'
+				movie_name = j_data.Movie;
+				td_html = ''
+				for (j=0; j<data_columns.length; j++)
+				{
+					column_name = data_columns[j]
+					dt_r = j_data[column_name]
+					if (dt_r == undefined){dt_r='-'}
+					td_html += '<td>' + dt_r + '</td>'
+					//break
+					
+				}
+				//add button to display modal breakdown table
+				//style="background-color:green"
+				func_str = "movie_data('" + movie_name + "')"
+				btn_html = `<button type="button" id="data-modal-btn" class="btn btn-info btn-sm" 
+				data-toggle="modal" data-target="#myModal" onclick="` + func_str + `" >View Data</button>`
+				td_html += '<td>' + btn_html + '</td>'
+
+				row_html += td_html
+				row_html += '</tr>'
+				table_html += row_html
+			}
+			table_html += '</table>'
+			return table_html
+		}
+
+		//function - sort columns in table
+		function sortTable(n) {
+			text_sort_ids = [1]
+			var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+			table = document.getElementById("daily_table");
+			switching = true;
+			//Set the sorting direction to ascending:
+			dir = "asc"; 
+			/*Make a loop that will continue until
+			no switching has been done:*/
+			while (switching) {
+				//start by saying: no switching is done:
+				switching = false;
+				rows = table.rows;
+				/*Loop through all table rows (except the
+				first, which contains table headers):*/
+				for (i = 1; i < (rows.length - 1); i++) {
+					//start by saying there should be no switching:
+					shouldSwitch = false;
+					/*Get the two elements you want to compare,
+					one from current row and one from the next:*/
+					x = rows[i].getElementsByTagName("TD")[n];
+					y = rows[i + 1].getElementsByTagName("TD")[n];
+					/*check if the two rows should switch place,
+					based on the direction, asc or desc:*/
+					if (dir == "asc") {
+						//if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) 
+						//if (Number(x.innerHTML) > Number(y.innerHTML) )
+						
+						if (text_sort_ids.includes(n))
+						{cond = x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()} //text based sort
+						else
+						{cond = Number(x.innerHTML) > Number(y.innerHTML)} //number based sort
+						if(cond)
+						{
+							shouldSwitch= true;//if so, mark as a switch and break the loop:
+							break;
+						}
+					} 
+					else if (dir == "desc") {
+						//if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) 
+						//if (Number(x.innerHTML) < Number(y.innerHTML) )
+
+						if (text_sort_ids.includes(n))
+						{cond = x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()} //text based sort
+						else
+						{cond = Number(x.innerHTML) < Number(y.innerHTML)} //number based sort
+						if(cond)
+						{
+							shouldSwitch= true;//if so, mark as a switch and break the loop:
+							break;
+						}
+					}
+				}
+				if (shouldSwitch) {
+					/*If a switch has been marked, make the switch
+					and mark that a switch has been done:*/
+					rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+					switching = true;
+					//Each time a switch is done, increase this count by 1:
+					switchcount ++;      
+				} else {
+					/*If no switching has been done AND the direction is "asc",
+					set the direction to "desc" and run the while loop again.*/
+					if (switchcount == 0 && dir == "asc") {
+						dir = "desc";
+						switching = true;
+					}
+				}
+			}
+		}
+		
+		//function - each movie data for -> view button modal
+		async function movie_data(movie_name)
+		{
+			console.log('Movie', movie_name);
+			document.getElementById("modal_heading").innerHTML = movie_name + " - Daywise collection"
+			document.getElementById("modal_table").innerHTML = ''
+
+  		query_url="https://database.deta.sh/v1/d03x1tmc/test-totals/query";
+      query =[{'Movie': movie_name}]
       json_payload = {"query" : query}
       var response = await fetch(query_url, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify(json_payload) ,
-        cache:cache_meth ,
-      }); 
-     
-     var currentTime = new Date();
-      var currentOffset = currentTime.getTimezoneOffset();
-      var ISTOffset = 330;   // IST offset UTC +5:30 
-      var ISTTime = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);
-      //alert('fetch_time' + response.status+ ISTTime )
-
-      if (response.status!=200) {
-        cont_div = document.getElementById("live_gross_container");
-        cont_div.innerHTML = response;
-        return;
-      }
-      var data = await response.text();
-      //console.log('response:' + response + response.status)
-      data = JSON.parse(data)
-      //console.log(data)
+        cache:"reload" ,
+      });
+			if (response.status!=200) {
+				document.getElementById("modal_table").innerHTML = 'no-data'
+				return;
+			}
+			//data
+			var data = await response.json();
       data = data.items
+			//console.log('data',data)
+			len = data.length;
+			
+			header_list = ['Day count', 'Tracked gross <br>(in crore)'] // , 'Actual India Gross <br>(in crore)',
+			data_columns =[ 'Day count' , 'Tracked India Gross'] //'Actual India gross',  
+			init_table_html = '<table class="table table-striped" id= "daily_table" style="margin:1px">'
 
-      //filtering today's date data
-      //today_date = String(ISTTime.getFullYear()) + '-' + String(ISTTime.getMonth()) + '-' + String(ISTTime.getDate()) + ' 00:00:00'
-      var startDate = new Date("2023-06-19 00:00:00");//.toLocaleString("en-US", {timeZone: 'Asia/Kolkata'}) 
-      var endDate = new Date("2023-06-20 00:00:00");//.toLocaleString("en-US", {timeZone: 'Asia/Kolkata'});
-      console.log(startDate, endDate)
+			table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html)
+			modal_div = document.getElementById("modal_table");
+			modal_div.innerHTML = table_html
+			return
+		}
 
-       //this date based filter function doesn't work in iphone browsers / safari 
-      //(filter wont work so give dates in api query only)
-      /* data = data.filter(a => {
-          var date = new Date(a.fetch_time);
-          return (date >= startDate && date < endDate); 
-      });*/
-      //console.log('filtered data:') //console.log(data)
+		function drop_func()
+		{
+			var sd = document.getElementById("state_dropdown");
+			state = sd.options[sd.selectedIndex].text;
+			state_id = sd.value;
+			//console.log(state + state_id)
 
-      
-      //this date based sort function doesn't work in iphone browsers / safari 
-      //new modified function added below
-      /*
-      data.sort(function(a, b) {
-        const date1 = new Date(a['fetch_time']);
-        const date2 = new Date(b['fetch_time']);
-        return date2 - date1;;
-      });
-      */
-      
-      function getMonthNumberFromName(monthName) {
-        return new Date(`${monthName} 1, 2022`).getMonth();
-      }
+			//get data
+			/*
+			await total_html, city_html , state_html = getData();
 
-      function datestring_toDate(date_string)
-      {
-        //aa = '12:00:26 29 March 2023' //date_string
-        aa1 = date_string.split(" ")
-        aa_time = aa1[0].split(':')
-        aa_hr = aa_time[0]
-        aa_min = aa_time[1]
-        aa_sec = aa_time[2]
-        aa_day = aa1[1]
-        aa_month = aa1[2]
-        aa_year = aa1[3]
-        aa_month = getMonthNumberFromName(aa_month)
-        //console.log(aa_hr , aa_min, aa_sec, aa_day, aa_month, aa_year )
-        ff = new Date(aa_year, aa_month, aa_day, aa_hr, aa_min, aa_sec);//Constructs an date of the above parsed parts (Year,Month...
-        //console.log(ff)
-        return ff;
-      } 
-      
-      
-      data.sort(function(a, b) {
-        const date1 = datestring_toDate(a['fetch_time']);
-        const date2 = datestring_toDate(b['fetch_time']);
-        return date2 - date1;;         
-      });
-      //console.log(data)
-      total_data = data[0]
-      //console.log(total_data)
-      
+			if (state_id.toString() == "1")
+			{
+				console.log("check " +  state_id + state );
+				output_html = state_html + total_html
+			}
+			else{
+				output_html = city_html + total_html
+			}
 
-      fetch_time = total_data['fetch_time']
-      //alert(fetch_time)
-      //total_coll = Math.round(total_data['Total Tracked Gross']).toLocaleString('en-IN') //formatINR
-      total_coll = total_data['Total Tracked Gross']
-      coll_range = 'crores'
-      coll_div = 1e07
-      if (Number(total_coll) < 1e07) 
-      {
-        coll_range = 'lakhs'
-        coll_div = 1e05
-      }
-      //console.log(total_coll , coll_div)
-      total_coll = Math.round( (total_coll/coll_div) * 100)/100 //round to 2 decimal currency
-      
-      table_html = total_data['html_state_table'] 
-      total_html = `
-        <br>
-        <div id = 'tr_total' > ` + `
-        Total India Tracked Gross : Rs ` + total_coll.toString() + ' ' + coll_range + `<br> 
-          Tracked Shows : ` + total_data['Tracked Shows'] + `<br> 
-          Average Occupancy : ` + total_data['Average Occupancy'] + `% <br>
-        </div>
-        <div></div>
-      `;
-      
-      //ads
-      ad_html = ``
+			// write to div
+			cont_div = document.getElementById("live_gross_container");
+			cont_div.innerHTML = output_html;
+			console.log('yoooo' + state + state_id)*/
+		}
+		function custom_drop()
+		{
+			var sd = document.getElementById("state_dropdown");
+			state = sd.options[sd.selectedIndex].text;
+			state_id = sd.value;
 
-      end_html = `<p style=font-size:14px>Note: 
-        1) Tracked data only; Actual gross collections will vary / be higher <br>
-        2) Rest of India will have untagged cities which most probably belong to one of the states in above list.<br>
-        3) Data Tracked through BMS,Paytm & other online portals + some offline estimate <br>
-        ` +`
-        <text style="color:red; font-weight:normal;"> Data Last tracked/fetched: ` + fetch_time + `</text>
-        </p>`
+			if (state_id == "3")
+			{
+				div_el = document.getElementById("tsap_dp_div");
+				div_el.innerHTML = `<select id="tsap_dropdown" value="30" onchange="getData()">
+					<option value="30">TS-AP</option>
+					<option value="31">Telangana</option>
+					<option value="32">AndhraPradesh</option>
+				</select>`;
+				document.getElementById("state_dropdown").value="3";
+			}
+		}
 
-      // write to div
-      cont_div = document.getElementById("live_gross_container");
-      cont_div.innerHTML = table_html + ad_html + total_html + end_html;
-
-      //console.log('yoooo' + state + state_id)
-      //return total_html, city_html , state_html
-
-    }
-    
-    // call func
-    //getData();
-    //drop_func()
-  
-    function drop_func()
-    {
-      var sd = document.getElementById("state_dropdown");
-      state = sd.options[sd.selectedIndex].text;
-      state_id = sd.value;
-      //console.log(state + state_id)
-  
-      //get data
-      /*
-      await total_html, city_html , state_html = getData();
-  
-      if (state_id.toString() == "1")
-      {
-        console.log("check " +  state_id + state );
-        output_html = state_html + total_html
-      }
-      else{
-        output_html = city_html + total_html
-      }
-  
-      // write to div
-      cont_div = document.getElementById("live_gross_container");
-      cont_div.innerHTML = output_html;
-      console.log('yoooo' + state + state_id)*/
-    }
-    function custom_drop()
-    {
-      var sd = document.getElementById("state_dropdown");
-      state = sd.options[sd.selectedIndex].text;
-      state_id = sd.value;
-  
-      if (state_id == "3")
-      {
-        div_el = document.getElementById("tsap_dp_div");
-        div_el.innerHTML = `<select id="tsap_dropdown" value="30" onchange="getData()">
-          <option value="30">TS-AP</option>
-          <option value="31">Telangana</option>
-          <option value="32">AndhraPradesh</option>
-        </select>`;
-        document.getElementById("state_dropdown").value="3";
-      }
-    }
-  
-    
-    /// When the user clicks on the button, toggle between hiding and showing the dropdown content
-    function myFunction() {
-      document.getElementById("myDropdown").classList.toggle("show");
-    }
-    
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-  </script>
-       
+			
+		/// When the user clicks on the button, toggle between hiding and showing the dropdown content
+		function myFunction() {
+			document.getElementById("myDropdown").classList.toggle("show");
+		}
+			
+		// Close the dropdown if the user clicks outside of it
+		window.onclick = function(event) {
+			if (!event.target.matches('.dropbtn')) {
+				var dropdowns = document.getElementsByClassName("dropdown-content");
+				var i;
+				for (i = 0; i < dropdowns.length; i++) {
+					var openDropdown = dropdowns[i];
+					if (openDropdown.classList.contains('show')) {
+						openDropdown.classList.remove('show');
+					}
+				}
+			}
+		}
+	
+	
+	/*Actual Footfalls"
+1: "Actual India gross"
+2: "Change"
+3: "Date"
+4: "Day count"
+5: "English Gross"
+6: "Hindi Gross"
+7: "Kannada Gross"
+8: "Karnataka Gross"
+9: "Kerala Gross"
+10: "Malayalam Gross"
+11: "Movie"
+12: "Release date"
+13: "Tamil Gross"
+14: "TamilNadu Gross"
+15: "Telugu Gross"
+16: "Telugu States Gross"
+17: "Tracked Footfalls"
+18: "Tracked India Gross"
+19: "Tracked Shows"
+20: "fetch_time"
+21: "key"
+*/
+	</script>
+			 
 </html> 

@@ -41,6 +41,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 	
 	<style>
@@ -67,9 +68,16 @@
     	background-color: #009879;
     	color: #ffffff;
     	text-align: left;
+			white-space: nowrap;
+			font-size: 14px;
+			padding: 12px 15px;
+			/*position: sticky;
+  		top: 0;*/
 		}
-		#daily_table th, #daily_table td {
-				padding: 12px 15px;
+		#daily_table  th:hover {cursor: pointer;}
+		#daily_table td {
+			padding: 12px 15px;
+			text-align: center;
 		}
 		#daily_table tbody tr {
 				border-bottom: 1px solid #dddddd;
@@ -83,6 +91,20 @@
 		#daily_table tbody tr.active-row {
 				font-weight: bold;
 				color: #009879;
+		}
+		#daily_table .th-sort-asc::after {
+			content: "\25b4";
+		}
+		#daily_table .th-sort-desc::after {
+			content: "\25be";
+		}
+		#daily_table .th-sort-asc::after,
+		#daily_table .th-sort-desc::after {
+			margin-left: 5px;
+		}
+		#daily_table .th-sort-asc,
+		#daily_table .th-sort-desc {
+			background: rgba(0, 0, 0, 0.1);
 		}
 		.heading_class{
 			text-align: center;
@@ -143,7 +165,13 @@
 			padding: 5px;
 			margin-top: none;
 		}
-		
+		#dropdown_row_col1{width: 50%;}
+		#dropdown_row_col2{width: 50%;}
+
+		#daily_table .sticky-col {position: -webkit-sticky;position: sticky;background-color: #FCF5E5;}
+		#daily_table .first-col {width: 50px;min-width: 50px;max-width: 50px;left: 0px;}
+		#daily_table .second-col {width: 125px;min-width: 125px;max-width: 125px;left: 50px;}
+
 		@media only screen and (max-width: 480px) {
 			/* horizontal scrollbar for tables if mobile screen */
 			#daily_table {
@@ -171,9 +199,7 @@
 			#region_dropdown{font-size: 15px;}
 			#date_select{font-size: 15px;}
 			/*on mobile freeze 1st two rows*/
-			#daily_table .sticky-col {position: -webkit-sticky;position: sticky;background-color: white;}
-			#daily_table .first-col {width: 50px;min-width: 50px;max-width: 50px;left: 0px;}
-			#daily_table .second-col {width: 100px;min-width: 100px;max-width: 100px;left: 50px;}
+			#daily_table .sticky-col {position: -webkit-sticky;position: sticky;background-color: #FCF5E5;}
     } 
     @media only screen and (max-width: 720px) {
 			/* horizontal scrollbar for tables if mobile screen */
@@ -202,9 +228,6 @@
 			#region_dropdown{font-size: 15px;}
 			#date_select{font-size: 15px;}
 			/*on mobile freeze 1st two rows*/
-			#daily_table .sticky-col {position: -webkit-sticky;position: sticky;background-color: white;}
-			#daily_table .first-col {width: 50px;min-width: 50px;max-width: 50px;left: 0px;}
-			#daily_table .second-col {width: 100px;min-width: 100px;max-width: 100px;left: 50px;}
 		}
 	</style>
 
@@ -226,12 +249,11 @@
 			<colgroup>
 				<col span="1" id="dropdown_row_col1">
 				<col span="1" id="dropdown_row_col2">
-				<col span="1" id="dropdown_row_col3">
+				<!--<col span="1" id="dropdown_row_col3">-->
 			</colgroup>
 			<tr>
 				<td ><label for="date">Select Date</label></td>
 				<td ><label for="region_dropdown">Select Region</label></td>
-				<td></td>
 			</tr>
 			<tr>
 				<td>
@@ -247,22 +269,23 @@
 						<option value="6">North India</option>
 					</select>
 				</td>
-				<!--<td><button id="refresh_btn"  type="button" onclick="getData()">&#x21bb;</button></td>-->
 			</tr>
+			<tr>
 				<td id ="date_arrows">
 					<button class='dt_btns' id='prev_date' style="color:#007185;" onclick="prev_date_func()"> << Prev</button>
 					<button class='dt_btns' id='next_date' style="color:#007185;" onclick="next_date_func()"> Next >> </button>
 				</td>	
 				<td>
+					<!--<button id="refresh_btn"  type="button" onclick="getData()">&#x21bb;</button>
 					<button class='dt_btns' id="scorll_arr" style="color:#007185; font-size: 12px;" > Scroll right >> </button>
-				</td>	
-				
-			<tr>
-
+					-->	
+				</td>
 			</tr>
 		</table>
 		
-		<div id="table_container" style="width: 100%; overflow-x:auto;"> </div>
+		<p id="scorll_arr" style="color:#007185; font-size:12px; text-align:right; margin-bottom: 0px;" > Scroll right >> </p>
+		<div id="table_container" style=" width: 100%; overflow-x:auto;"> 
+		</div>
 
 		<div class="modal" id="myModal">
 			<div class="modal-dialog">
@@ -303,10 +326,11 @@
 
 		<div style="padding: 2%; margin: 2%;">
 			<p>Note:<br>
-				1) 'cr': All gross numbers in crores INR<br> 
-				2) 'L': indicates footfalls in Lakhs <br>
-				3) Date updates in realtime - 24x7 online tracking system<br>
-				4) Change % is a compatabile metric at EOD only 
+				1) Acronymns -> 'Tr.' : Tracked & 'Act.': Actual <br> 'Agg.': Aggregate<br>
+				2) 'cr': All gross numbers in crores INR<br> 
+				3) 'L': indicates footfalls in Lakhs <br>
+				4) Date updates in realtime - 24x7 online tracking system<br>
+				5) Change % is a compatabile metric at EOD only 
 			</p>
 			</p>
 		</div>
@@ -435,7 +459,9 @@
 			"5": "kerala",
 			"6": "roi",
 		}
-		headers={}
+		base_url = 'http://127.0.0.1:8001'
+		base_url = 'https://daily_boxoffice-1-c5568081.deta.app'
+
 		headers = {
 			'accept': 'application/json, text/javascript, */*; q=0.01',
 			'accept-language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
@@ -457,8 +483,7 @@
 			region_val= document.getElementById('region_dropdown').value;
 			console.log('date_str' , date_str , 'select state' , region_val)
 			cache_meth = "reload";
-			base_url = 'http://127.0.0.1:8001'
-			base_url = 'https://daily_boxoffice-1-c5568081.deta.app'
+			
 			end_point = option_endpoint[region_val]
 			url = base_url + '/' + end_point
 			query_url = url + '?selected_date=' + date_str
@@ -493,62 +518,77 @@
 			var data = await response.json();
 			//console.log(data)
 			init_table_html = '<table id= "daily_table">'
-			non_sort_ids = [1]
-			header_list = ['Rank' , 'Movie' , 'Release Date', 'Day No.',]
+			text_sort_ids = [1]
+			non_sort_ids = [-1]
+			gr_cols = []
+			ff_cols = []
+			change_cols = []
+			header_list = ['Rank' , 'Movie' , 'Release', 'Day',]
 			data_columns =[ 'Rank' , 'Movie',  'Release date', 'Day count', ]
 			if (end_point=='india')
 			{
-				header_list = header_list.concat(['Tracked Gross', 'Tracked Shows', 'Change','Tracked Footfalls',
-				 'Actual India Gross', 'Aggregate Tracked Gross', 'Aggregate Actual Gross', 
-				 'Aggreagte Footfalls', 'Showdown'])
+				header_list = header_list.concat(['Tracked Gross', 'Tr. Shows', 'Change','Tr. Footfalls',
+				 'Actual Gross', 'Aggregate Tracked Gross', 'Agg. Actual Gross', 
+				 'Agg. Footfalls', 'Showdown'])
 				data_columns = data_columns.concat(['Tracked India Gross' , 'Tracked Shows' , 'Change' , 
 					'Tracked Footfalls', 'Actual India gross', 'Aggregate Tracked India Gross',
 					 'Aggreagte Actual India Gross', 'Aggreagte Actual Footfalls',
 				])
 				gr_cols = [4,8,9,10] //gross in cr/crore
 				ff_cols = [7,11] //footfall in Lakh/L
-				table_html = create_table_withview(data, header_list, data_columns, non_sort_ids, init_table_html, gr_cols, ff_cols) 
+				change_cols = [6] //percentages
+				modal_header_list = "Day No.,Tracked India gross <br>(in crore),Change" 
+				modal_data_columns = "Day count,Tracked India Gross,Change"
 			}
 			else if (end_point=='tsap')
 			{
-				header_list = header_list.concat(['TS-AP Tracked gross', 'Tracked Footfalls', 'Telugu Lang Gross',])	//'Tracked Shows' , 'Change','Showdown'
+				header_list = header_list.concat(['TS-AP Tracked gross', 'Tracked Footfalls', 'Telugu Lang Gross', 'Showdown'])	//'Tracked Shows' , 'Change','Showdown'
 				//'Actual India Gross', 'Aggregate Tracked gross', 'Aggregate Actual gross',
 				data_columns = data_columns.concat(['Telugu States Gross', 'Telugu States FF_tr',  'Telugu Gross',])
 				gr_cols = [4,6] //gross in cr/crore
-				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html , gr_cols) 
+				//table_html = create_table(data, header_list, data_columns, text_sort_ids, init_table_html , gr_cols) 
+				modal_header_list = "Day No.,TS-AP Tracked gross <br>(in crore)" 
+				modal_data_columns = "Day count,Telugu States Gross"
 			}
 			else if (end_point=='tamilnadu')
 			{
-				header_list = header_list.concat(['TN Tracked gross', 'Tracked Footfalls', 'Tamil Lang Gross'])	//'Tracked Shows' , 'Change','Showdown'	
+				header_list = header_list.concat(['TN Tracked gross', 'Tracked Footfalls', 'Tamil Lang Gross', 'Showdown'])	//'Tracked Shows' , 'Change','Showdown'	
 				data_columns = data_columns.concat(['TamilNadu Gross', 'TamilNadu FF_tr', 'Tamil Gross',])
 				gr_cols = [4,6] //gross in cr/crore
-				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html , gr_cols)
+				modal_header_list = "Day No.,TamilNadu Tracked gross <br>(in crore)" 
+				modal_data_columns = "Day count,TamilNadu Gross"
 			}
 			else if (end_point=='karnataka')
 			{
-				header_list = header_list.concat(['KA Tracked gross', 'Tracked Footfalls', 'Kannada Gross'])	//'Tracked Shows' , 'Change','Showdown'	
+				header_list = header_list.concat(['KA Tracked gross', 'Tracked Footfalls', 'Kannada Gross', 'Showdown'])	//'Tracked Shows' , 'Change','Showdown'	
 				data_columns = data_columns.concat(['Karnataka Gross', 'Karnataka FF_tr', 'Kannada Gross'])
 				gr_cols = [4,6] //gross in cr/crore
-				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html , gr_cols)
+				modal_header_list = "Day No.,Karnataka Tracked gross <br>(in crore)" 
+				modal_data_columns = "Day count,Karnataka Gross"
 			}
 			else if (end_point=='kerala')
 			{
-				header_list = header_list.concat(['KL Tracked gross', 'Tracked Footfalls', 'Malayalam Gross'])	//'Tracked Shows' , 'Change','Showdown'	
+				header_list = header_list.concat(['KL Tracked gross', 'Tracked Footfalls', 'Malayalam Gross', 'Showdown'])	//'Tracked Shows' , 'Change','Showdown'	
 				data_columns = data_columns.concat(['Kerala Gross', 'Kerala FF_tr', 'Malayalam Gross', ])
 				gr_cols = [4,6] //gross in cr/crore
-				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html , gr_cols)
+				modal_header_list = "Day No.,Kerala Tracked gross <br>(in crore)" 
+				modal_data_columns = "Day count,Kerala Gross"
 			}
 			else if (end_point=='roi')
 			{
-				header_list = header_list.concat(['ROI Tracked gross', 'Tracked Footfalls', 'Hindi Gross'])	//'Tracked Shows' , 'Change','Showdown'	
+				header_list = header_list.concat(['ROI Tracked gross', 'Tracked Footfalls', 'Hindi Gross', 'Showdown'])	//'Tracked Shows' , 'Change','Showdown'	
 				data_columns = data_columns.concat(['ROI Gross', 'ROI FF_tr', 'Hindi Gross', ])
 				gr_cols = [4,6] //gross in cr/crore
-				table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html , gr_cols) 
+				modal_header_list = "Day No.,Hindi Language Tracked gross <br>(in crore)"  //North India
+				modal_data_columns = "Day count,Hindi Gross"
 			}
 			else
 			{
 				table_html ='<p style="text-align:center;font-weight:bold;font-size:20px;">no-data</p>'
 			}
+			table_html = create_table_withview(data, header_list, data_columns, text_sort_ids, init_table_html, 
+				modal_header_list, modal_data_columns, gr_cols, ff_cols, change_cols) 
+			
 		
 			cont_div = document.getElementById("table_container");
 			cont_div.innerHTML = table_html //+ ad_html + total_html + end_html;
@@ -556,70 +596,9 @@
 
 		}
 		
-		//function - create table from data
-		function create_table(data, header_list, data_columns, non_sort_ids, init_table_html, gr_cols=[], ff_cols=[]) //div_id,
-		{
-			table_html = init_table_html
-			len = data.length;
-			header_html = '<tr>'
-			for (var i=0;i<header_list.length;i++)
-			{
-				// if (i in non_sort_ids.values()){header_html += '<th>'}
-				// else{header_html += '<th' + ' onclick="sortTable(' + i + ')" ' + '>'}
-				if (i==0) 
-				{
-					header_html += '<th' + ' class="sticky-col first-col" style="background-color: #009879;" onclick="sortTable(' + i + ')" ' + '>'
-				}
-				else if (i==1) 
-				{
-					header_html += '<th' + ' class="sticky-col second-col" style="background-color: #009879;" onclick="sortTable(' + i + ')" ' + '>'
-				}
-				else{
-					header_html += '<th' + ' onclick="sortTable(' + i + ')" ' + '>'
-				}
-				header_html += header_list[i] 
-				header_html += '</th>'
-			}
-			header_html += '</tr>'
-			table_html += header_html
-
-			for(var i=0;i<len;i++){
-				j_data = data[i]
-				//console.log(j_data)
-				//console.log(Object.keys(j_data))
-				row_html = '<tr>'
-				movie_name = j_data.Movie;
-				td_html = ''
-				for (j=0; j<data_columns.length; j++)
-				{
-					column_name = data_columns[j]
-					dt_r = j_data[column_name]
-					if (dt_r == undefined){dt_r='-'}
-					else if (gr_cols.includes(j)){dt_r = dt_r + 'cr'}
-					else if (ff_cols.includes(j)){dt_r = dt_r + ' L'}
-					if (j==0) 
-					{
-						td_html += '<td  class="sticky-col first-col" >' + dt_r + '</td>'
-					}
-					else if (j==1) 
-					{
-						td_html += '<td  class="sticky-col second-col" >' + dt_r + '</td>'
-					}
-					else{
-						td_html += '<td>' + dt_r + '</td>'
-					}
-					//break
-				}
-				row_html += td_html
-				row_html += '</tr>'
-				table_html += row_html
-			}
-			table_html += '</table>'
-			return table_html
-		}
-
 		//function - create table with view button
-		function create_table_withview(data, header_list, data_columns, non_sort_ids, init_table_html, gr_cols=[], ff_cols=[]) //div_id,
+		function create_table_withview(data, header_list, data_columns, text_sort_ids, init_table_html,
+			modal_header_list, modal_data_columns, gr_cols=[], ff_cols=[], change_cols=[]) //div_id,
 		{
 			table_html = init_table_html 
 			len = data.length;
@@ -637,7 +616,10 @@
 				else{
 					header_html += '<th' + ' onclick="sortTable(' + i + ')" ' + '>'
 				}
-				header_html += header_list[i] 
+				header_html += header_list[i] + '&nbsp; <i class="fa" style="font-size:12px; color:#16161d;" >&#xf0dc;</i>'
+				//if (non_sort_ids.includes(i)){continue}
+				//else {header_html += ' <i style="font-size:12px" class="fa">&#xf0dc;</i>'}
+				//&#x25B4; up &#x25BC;down  &#9650; up &#9660'; down #'&#xf0dc' up-down
 				header_html += '</th>'
 			}
 			header_html += '</tr>'
@@ -657,6 +639,13 @@
 					if (dt_r == undefined){dt_r='-'}
 					else if (gr_cols.includes(j)){dt_r = dt_r + 'cr'}
 					else if (ff_cols.includes(j)){dt_r = dt_r + ' L'}
+					else if (change_cols.includes(j))
+					{
+						dt_r = Number(dt_r)
+						if (dt_r>0){dt_r = '<text style="color:green;font-weight:bold;">' + dt_r + '%' + '</text>'}
+						else if(dt_r<0){dt_r = '<text style="color:red;font-weight:bold;">' + dt_r + '%' + '</text>'}
+						else {dt_r = "<text>" + dt_r + '%' + '</text>'}
+					}
 					if (j==0) 
 					{
 						td_html += '<td  class="sticky-col first-col" >' + dt_r + '</td>'
@@ -672,7 +661,10 @@
 				}
 				//add button to display modal breakdown table
 				//style="background-color:green"
-				func_str = "movie_data('" + movie_name + "')"
+				//header_list = ['Day No.', 'Tracked gross <br>(in crore)']
+				//data_columns =[ 'Day count' , 'Tracked India Gross']
+				param_str = "'" + movie_name + "', '" + modal_header_list  + "', '" + modal_data_columns + "'"
+				func_str = "movie_data(" + param_str + ")"
 				btn_html = `<button type="button" id="data-modal-btn" class="btn btn-info btn-sm" 
 				data-toggle="modal" data-target="#myModal" onclick="` + func_str + `" >View Data</button>`
 				td_html += '<td>' + btn_html + '</td>'
@@ -686,15 +678,18 @@
 		}
 
 		//function - sort columns in table
-		function sortTable(n) {
+		function sortTable(n) //text_sort_ids, gr_cols, ff_cols, change_cols)
+		{
 			text_sort_ids = [1]
-			gr_cols = [4,8,9,10]
+			gr_cols = [4,6,8,9,10]
 			ff_cols = [7,11]
+			change_cols = [6]
 			var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
 			table = document.getElementById("daily_table");
 			switching = true;
 			//Set the sorting direction to ascending:
 			dir = "asc"; 
+			 
 			/*Make a loop that will continue until
 			no switching has been done:*/
 			while (switching) {
@@ -733,8 +728,16 @@
 								xh = xh.replace(' L','')
 								yh = yh.replace(' L','')
 							}
-							cond = Number(xh) > Number(yh)
-						} //number based sort
+							if(change_cols.includes(n))
+							{
+								regex = /\>(.*?)\</
+								xh1 = regex.exec(xh)[1];
+								yh1 = regex.exec(yh)[1];
+								xh = xh1.replace('%','')
+								yh = yh1.replace('%','')
+							}
+								cond = Number(xh) > Number(yh)
+							} //number based sort
 						if(cond)
 						{
 							shouldSwitch= true;//if so, mark as a switch and break the loop:
@@ -762,6 +765,14 @@
 								xh = xh.replace(' L','')
 								yh = yh.replace(' L','')
 							}
+							if(change_cols.includes(n))
+							{
+								regex = /\>(.*?)\</
+								xh1 = regex.exec(xh)[1];
+								yh1 = regex.exec(yh)[1];
+								xh = xh1.replace('%','')
+								yh = yh1.replace('%','')
+							}
 							cond = Number(xh) < Number(yh)
 						} //number based sort
 						if(cond)
@@ -784,17 +795,44 @@
 					if (switchcount == 0 && dir == "asc") {
 						dir = "desc";
 						switching = true;
+						
 					}
 				}
 			}
+
+			/*hd = document.getElementsByClassName("th_arrow")[n].innerHTML;
+			if (hd=='&#xf107'){document.getElementsByClassName("th_arrow")[n].innerHTML='&#xf106'} //switch direction arrow
+			else if(hd=='&#xf106'){document.getElementsByClassName("th_arrow")[n].innerHTML='&#xf107'} */
+			//else{hd='&#9650'} //'▴' '▾'
 		}
 		
 		//function - each movie data for -> view button modal
-		async function movie_data(movie_name)
+		async function movie_data(movie_name, header_list=[], data_columns=[], lang_cond=false, )
 		{
+			//convert string to list
+			header_list = header_list.split(',')
+			data_columns = data_columns.split(',')
+			console.log(header_list, data_columns)
+
 			console.log('Movie', movie_name);
 			document.getElementById("modal_heading").innerHTML = movie_name + " - Daywise collection"
 			document.getElementById("modal_table").innerHTML = ''
+
+			/*if (lang_cond==true)
+			{
+				end_point = option_endpoint[region_val]
+				url = base_url + '/' + 'lang'
+				query_url = url + '?movie_name=' + movie_name
+				console.log(query_url)
+
+				try 
+				{
+					var response = await fetch(query_url, {
+						method: 'GET',
+					})
+				}
+				catch(err){}
+			}*/
 
   		query_url="https://database.deta.sh/v1/d03x1tmc/test-totals/query";
       query =[{'Movie': movie_name}]
@@ -809,20 +847,61 @@
 				document.getElementById("modal_table").innerHTML = '<p style="text-align:center;font-weight:bold;font-size:20px;">no-data</p>'
 				return;
 			}
+			
 			//data
 			var data = await response.json();
       data = data.items
 			//console.log('data',data)
 			len = data.length;
 			
-			header_list = ['Day count', 'Tracked gross <br>(in crore)'] // , 'Actual India Gross',
-			data_columns =[ 'Day count' , 'Tracked India Gross'] //'Actual India gross',  
-			init_table_html = '<table class="table table-striped" id= "daily_table" style="margin:1px; width:100%;">'
+			//header_list = ['Day No.', 'Tracked gross <br>(in crore)'] // , 'Actual India Gross',
+			//data_columns =[ 'Day count' , 'Tracked India Gross'] //'Actual India gross',  
+			init_table_html = '<table class="table table-striped" id= "modal_table" style="margin:1px; width:100%;">'
 
-			table_html = create_table(data, header_list, data_columns, non_sort_ids, init_table_html)
+			table_html = create_table(data, header_list, data_columns, text_sort_ids, init_table_html)
 			modal_div = document.getElementById("modal_table");
 			modal_div.innerHTML = table_html
 			return
+		}
+
+		//function - create table from data (no sort or others)
+		function create_table(data, header_list, data_columns, text_sort_ids, init_table_html, gr_cols=[], ff_cols=[]) //div_id,
+		{
+			table_html = init_table_html
+			len = data.length;
+			header_html = '<tr>'
+			for (var i=0;i<header_list.length;i++)
+			{
+				header_html += '<th>' // header_html += '<th' + ' onclick="sortTable(' + i + ')" ' + '>'
+				header_html += header_list[i] //+ '&nbsp; <i class="fa" style="font-size:12px; color:#16161d;" >&#xf0dc;</i>'
+				header_html += '</th>'
+			}
+			header_html += '</tr>'
+			table_html += header_html
+
+			for(var i=0;i<len;i++){
+				j_data = data[i]
+				//console.log(j_data)
+				//console.log(Object.keys(j_data))
+				row_html = '<tr>'
+				movie_name = j_data.Movie;
+				td_html = ''
+				for (j=0; j<data_columns.length; j++)
+				{
+					column_name = data_columns[j]
+					dt_r = j_data[column_name]
+					if (dt_r == undefined){dt_r='-'}
+					else if (gr_cols.includes(j)){dt_r = dt_r + 'cr'}
+					else if (ff_cols.includes(j)){dt_r = dt_r + ' L'}
+					td_html += '<td>' + dt_r + '</td>'
+					//break
+				}
+				row_html += td_html
+				row_html += '</tr>'
+				table_html += row_html
+			}
+			table_html += '</table>'
+			return table_html
 		}
 
 		/// When the user clicks on the button, toggle between hiding and showing the dropdown content

@@ -116,6 +116,13 @@ for dirs in directory_list:
 
     links_html += '</div>'
 
+##natural sort
+import re
+def atoi(text):
+    return int(text) if text.isdigit() else text
+def natural_keys(text):
+    return [ atoi(c) for c in re.split(r'(\d+)', text) ]
+
 ### right side - generate nested list with clickable drops
 dir_path  = root_dir +  dirs + '/' #print(dir_path)
 ## first generate tree directory -> nested dictionary form
@@ -123,10 +130,12 @@ dir = {}
 rootdir = dir_path.rstrip(os.sep)
 start = rootdir.rfind(os.sep) + 1
 for path, dirs, files in os.walk(rootdir):
+    dirs.sort(key=natural_keys)
     folders = path[start:].split(os.sep)
+    #print('folders', folders , type(folders))
     rel_dir = os.path.relpath(path, root_dir)
     #files1 = [os.path.join(rel_dir, os.path.basename(ff)) for ff in files]
-    files.sort()
+    files.sort(key=natural_keys)
     files1 = []
     for ff in files:
         #print(ff) #name of file

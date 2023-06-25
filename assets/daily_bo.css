@@ -130,6 +130,12 @@ top: 0;*/
     color: red;
 }
 
+#modal_heading
+{
+    font-weight: bold;
+    font-size: 20px;
+}
+
 #dropdown_row_col1{width: 50%;}
 #dropdown_row_col2{width: 50%;}
 

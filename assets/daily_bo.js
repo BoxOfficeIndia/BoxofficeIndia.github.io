@@ -1,7 +1,5 @@
 /*live track pages common js */
 
-
-
 //options map
 option_endpoint = {
     "1": "india",
@@ -14,16 +12,7 @@ option_endpoint = {
 base_url = 'http://127.0.0.1:8001'
 base_url = 'https://daily_boxoffice-1-c5568081.deta.app'
 
-headers = {
-    'accept': 'application/json, text/javascript, */*; q=0.01',
-    'accept-language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
-    'X-API-Key': 'd03x1tmc_W5c3GdBzPdH2MToY3rJ2BjFd4haMfjGK',
-    'Content-Type': 'application/json',
-    'Authority':  'database.deta.sh',
-    'Accept-Language': 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
-    'Sec-Fetch-Mode': 'no-cors',
-    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
-}
+
 
 //function - to get main table data 
 async function getData()
@@ -39,7 +28,7 @@ async function getData()
     end_point = option_endpoint[region_val]
     url = base_url + '/' + end_point
     query_url = url + '?selected_date=' + date_str
-    console.log(query_url)
+    //console.log(query_url)
 
     document.getElementById("table_container").innerHTML = ''
     // query = [{"Show Date":"29 March 2023"}] //json_payload = {"query" : query}
@@ -215,7 +204,7 @@ function create_table_withview(data, header_list, data_columns, text_sort_ids, i
         //style="background-color:green"
         //header_list = ['Day No.', 'Tracked gross <br>(in crore)']
         //data_columns =[ 'Day count' , 'Tracked India Gross']
-        param_str = "'" +movie_name+ "', '" +modal_header_list+ "', '" +modal_data_columns+ "', '" + lang_cond +"'" 
+        param_str = "'" +movie_name+ "', '" +modal_header_list+ "', '" + modal_data_columns+ "', '" + lang_cond +"'" 
         func_str = "movie_data(" + param_str + ")"
         btn_html = `<button type="button" id="data-modal-btn" class="btn btn-info btn-sm" 
         data-toggle="modal" data-target="#myModal" onclick="` + func_str + `" >View Data</button>`
@@ -362,33 +351,38 @@ function sortTable(n) //text_sort_ids, gr_cols, ff_cols, change_cols)
 async function movie_data(movie_name, header_list=[], data_columns=[], lang_cond='false', )
 {
     //convert string to list
+    data_columns_str = data_columns
     header_list = header_list.split(',')
     data_columns = data_columns.split(',')
-    console.log(header_list, data_columns)
+    //console.log(header_list, data_columns)
 
     console.log('Movie', movie_name);
     document.getElementById("modal_heading").innerHTML = movie_name + " - Tracked Collection"
     document.getElementById("modal_body").innerHTML = ''
     lang_table = ''
 
-    // language data
-    if ( (lang_cond==true) || (lang_cond.toLowerCase() =='true') )
+    // language data & daywise data
+    url = base_url + '/' + 'lang-daywise'
+    query_url = url + '?movie_name=' + movie_name + '&lang_cond=' + lang_cond + '&data_columns=' + data_columns_str
+    query_url = encodeURI(query_url)
+    //console.log(query_url)
+    try 
     {
-        end_point = option_endpoint[region_val]
-        url = base_url + '/' + 'lang'
-        query_url = url + '?movie_name=' + movie_name
-        console.log(query_url)
-        try 
-        {
-            var response = await fetch(query_url, {
-                method: 'GET',
-            })
-        }
-        catch(err){}
-        //data
-        var data = await response.json();
-        //console.log('lang data',data, typeof(data))
+        var response = await fetch(query_url, {
+            method: 'GET',
+        })
+    }
+    catch(err){}
+    //data
+    var data = await response.json();
+    //console.log('lang data',data, typeof(data))
+    lang_data = data['Lang wise']
+    daywise_data = data['Day wise']
 
+    //language wise
+    if ( (lang_cond==true) || (lang_cond.toLowerCase() =='true') )
+	{
+        data = lang_data
         lang_table = '<table class="table table-striped"> <caption> Language wise collection </caption> <tr> <th>Language</th> <th>Tracked Gross (in crore)</th> </tr>'
         for (const key in data){
             r_html = '<tr>'
@@ -401,27 +395,9 @@ async function movie_data(movie_name, header_list=[], data_columns=[], lang_cond
         lang_table += '</table>'
     }
 
-    //daywise data
-query_url="https://database.deta.sh/v1/d03x1tmc/test-totals/query";
-query =[{'Movie': movie_name}]
-json_payload = {"query" : query}
-var response = await fetch(query_url, {
-method: 'POST',
-headers: headers,
-body: JSON.stringify(json_payload) ,
-cache:"reload" ,
-});
-    if (response.status!=200) {
-        document.getElementById("modal_table").innerHTML = '<p style="text-align:center;font-weight:bold;font-size:20px;">no-data</p>'
-        return;
-    }
     
-    //data
-    var data = await response.json();
-data = data.items
-    //console.log('data',data)
-    len = data.length;
-    
+    // day wise data
+    data = daywise_data
     //header_list = ['Day No.', 'Tracked gross <br>(in crore)'] // , 'Actual India Gross',
     //data_columns =[ 'Day count' , 'Tracked India Gross'] //'Actual India gross',  
     init_table_html = '<table class="table table-striped" id= "modal_table" style="margin:1px; width:100%;">'
@@ -491,42 +467,4 @@ window.onclick = function(event) {
             }
         }
     }
-}
-
-
-
-nav_elems = `<a href="/">Home</a>
-        <a href="/livesales">Live Advance Sales</a>
-        <a href="/livetracking">Live Collection Tracking</a>
-        <a href="/collections">Collection Reports</a>
-        <a href="/collections">Boxoffice Records</a>   
-        <a href="/advancesales">Advance Sales Reports</a>
-        <a href="/OSadvancesales">Overseas Advance Sales</a>
-        <a href="/blogs-articles/index.html">News</a>
-        <a href="/gallery/index.html">Gallery</a>
-        <a href="/site data/about.html">About Us</a>
-`
-function openNav() {
-    document.getElementById("topnav").style.width = "250px";
-}
-function closeNav() {
-    document.getElementById("topnav").style.width = "0";
-}
-if (window.matchMedia("(max-width: 700px)").matches) {
-    console.log(window.matchMedia("(max-width: 700px)").matches)
-    // Viewport is less or equal to 700 pixels wide
-    div_elem = document.getElementById("topnav");
-    div_elem.innerHTML = `
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>` + nav_elems
-    span_elem = document.getElementById("navpoint")
-    span_elem.innerHTML =  `&#9776;` 
-} 
-else
-{
-    console.log(window.matchMedia("(max-width: 700px)").matches)
-    div_elem = document.getElementById("topnav");
-    div_elem.innerHTML = nav_elems;
-    // Viewport is greater than 700 pixels wide
-    span_elem = document.getElementById("navpoint")
-    span_elem.innerHTML = '';
 }

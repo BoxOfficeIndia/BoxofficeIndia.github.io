@@ -12,8 +12,6 @@ option_endpoint = {
 base_url = 'http://127.0.0.1:8001'
 base_url = 'https://daily_boxoffice-1-c5568081.deta.app'
 
-
-
 //function - to get main table data 
 async function getData()
 {
@@ -349,12 +347,13 @@ function sortTable(n) //text_sort_ids, gr_cols, ff_cols, change_cols)
 
 //function - each movie data for -> view button modal
 async function movie_data(movie_name, header_list=[], data_columns=[], lang_cond='false', )
-{
+{   
     //convert string to list
     data_columns_str = data_columns
     header_list = header_list.split(',')
     data_columns = data_columns.split(',')
     //console.log(header_list, data_columns)
+    date_str = document.getElementById('date_select').value //'2023-06-16'
 
     console.log('Movie', movie_name);
     document.getElementById("modal_heading").innerHTML = movie_name + " - Tracked Collection"
@@ -363,7 +362,7 @@ async function movie_data(movie_name, header_list=[], data_columns=[], lang_cond
 
     // language data & daywise data
     url = base_url + '/' + 'lang-daywise'
-    query_url = url + '?movie_name=' + movie_name + '&lang_cond=' + lang_cond + '&data_columns=' + data_columns_str
+    query_url = url + '?movie_name=' + movie_name + '&lang_cond=' + lang_cond + '&data_columns=' + data_columns_str + '&selected_date=' + date_str
     query_url = encodeURI(query_url)
     //console.log(query_url)
     try 

@@ -120,8 +120,8 @@ async function getData()
         header_list = header_list.concat(['ROI Tracked gross', 'Tracked Footfalls', 'Hindi Gross', 'Showdown'])	//'Tracked Shows' , 'Change','Showdown'	
         data_columns = data_columns.concat(['ROI Gross', 'ROI FF_tr', 'Hindi Gross', ])
         gr_cols = [4,6] //gross in cr/crore
-        modal_header_list = "Day No.,Hindi Language Tracked gross <br>(in crore)"  //North India
-        modal_data_columns = "Day count,Hindi Gross"
+        modal_header_list = "Day No.,ROI Tracked gross,Hindi Language Tracked gross <br>(in crore)"  //North India
+        modal_data_columns = "Day count,ROI Gross,Hindi Gross"
     }
     else
     {
@@ -345,15 +345,20 @@ function sortTable(n) //text_sort_ids, gr_cols, ff_cols, change_cols)
     //else{hd='&#9650'} //'▴' '▾'
 }
 
-//function - each movie data for -> view button modal
-async function movie_data(movie_name, header_list=[], data_columns=[], lang_cond='false', )
+//function - each movie data for -> view button modal #header_list=[], data_columns=[],
+async function movie_data(movie_name, header_list='', data_columns='', lang_cond='false', )
 {   
     //convert string to list
+    console.log(data_columns)
     data_columns_str = data_columns
     header_list = header_list.split(',')
     data_columns = data_columns.split(',')
     //console.log(header_list, data_columns)
     date_str = document.getElementById('date_select').value //'2023-06-16'
+
+    //change % check
+    change_cols=[]
+    //if(data_columns.includes('ROI Gross')){change_cols=[]}
 
     console.log('Movie', movie_name);
     document.getElementById("modal_heading").innerHTML = movie_name + " - Tracked Collection"
@@ -401,7 +406,7 @@ async function movie_data(movie_name, header_list=[], data_columns=[], lang_cond
     //data_columns =[ 'Day count' , 'Tracked India Gross'] //'Actual India gross',  
     init_table_html = '<table class="table table-striped" id= "modal_table" style="margin:1px; width:100%;">'
     init_table_html += '<caption> Day wise collection </caption>'
-    table_html = create_table(data, header_list, data_columns, text_sort_ids, init_table_html)
+    table_html = create_table(data, header_list, data_columns, text_sort_ids, init_table_html,[],[],change_cols)
     modal_div = document.getElementById("modal_body");
     modal_html = lang_table + table_html
     modal_div.innerHTML = modal_html

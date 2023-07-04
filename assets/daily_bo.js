@@ -68,14 +68,13 @@ async function getData()
     if (end_point=='india')
     {
         header_list = header_list.concat(['Tracked Gross', 'Tr. Shows', 'Change','Tr. Footfalls',
-        'Actual Gross', 'Aggregate Tracked Gross', 'Agg. Actual Gross', 
-        'Agg. Footfalls', 'Showdown'])
+         'Aggregate Tracked Gross', 'Agg. Actual Gross', 'Agg. Footfalls', 'Showdown']) //'Actual Gross',
         data_columns = data_columns.concat(['Tracked India Gross' , 'Tracked Shows' , 'Change' , 
-            'Tracked Footfalls', 'Actual India gross', 'Aggregate Tracked India Gross',
+            'Tracked Footfalls',  'Aggregate Tracked India Gross',
             'Aggreagte Actual India Gross', 'Aggreagte Actual Footfalls',
-        ])
-        gr_cols = [4,8,9,10] //gross in cr/crore
-        ff_cols = [7,11] //footfall in Lakh/L
+        ])//'Actual India gross',
+        gr_cols = [4,8,9] //gross in cr/crore
+        ff_cols = [7,10] //footfall in Lakh/L
         change_cols = [6] //percentages
         modal_header_list = "Day No.,Tracked India gross <br>(in crore),Change" 
         modal_data_columns = "Day count,Tracked India Gross,Change"

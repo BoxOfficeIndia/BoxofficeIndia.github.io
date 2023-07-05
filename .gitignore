@@ -13,11 +13,13 @@ __pycache__
 **/del.css
 **/test.html
 **/__pycache__
-records-BO/template.html
-collections/file-gen-script.py
 
+Boxoffice-db/template.html
+Boxoffice-db
+
+collections/file-gen-script.py
+assets/file-gen-script copy.py
 assets/del.html
 assets/delete.css
-assets/file-gen-script copy.py
 assets/index-old.html
 assets/test.html

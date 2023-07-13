@@ -177,6 +177,7 @@
         <option value="1"  >India - Top states</option>
         <option value="2">India - Top cities</option>
         <option value="3">India - Language & Version wise</option>
+        <option value="4">India - National Chains Data</option>
       </select>
       <div style="display: inline-block;" id = "tsap_dp_div"></div>
       <!--<script>custom_drop()</script>-->
@@ -366,6 +367,7 @@
       state_html = total_data['html_state_table'].trim()
       lang_html = total_data['html_language_table'].trim()
       version_html = total_data['html_version_table'].trim()
+      chains_html = total_data['html_chains_table'].trim()
       //console.log(state_html)
   
       /*
@@ -391,6 +393,10 @@
       else if (state_id.toString() == "3")
       {
         output_html = lang_html + version_html + total_html
+      }
+      else if (state_id.toString() == "4")
+      {
+        output_html = chains_html + total_html
       }
       else{
         output_html = city_html + total_html

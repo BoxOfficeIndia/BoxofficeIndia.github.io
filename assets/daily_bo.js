@@ -348,7 +348,6 @@ function sortTable(n) //text_sort_ids, gr_cols, ff_cols, change_cols)
 async function movie_data(movie_name, header_list='', data_columns='', lang_cond='false', )
 {   
     //convert string to list
-    console.log(data_columns)
     data_columns_str = data_columns
     header_list = header_list.split(',')
     data_columns = data_columns.split(',')
@@ -359,7 +358,7 @@ async function movie_data(movie_name, header_list='', data_columns='', lang_cond
     change_cols=[]
     //if(data_columns.includes('ROI Gross')){change_cols=[]}
 
-    console.log('Movie', movie_name);
+    //console.log('Movie', movie_name);
     document.getElementById("modal_heading").innerHTML = movie_name + " - Tracked Collection"
     document.getElementById("modal_body").innerHTML = ''
     lang_table = ''
@@ -381,23 +380,50 @@ async function movie_data(movie_name, header_list='', data_columns='', lang_cond
     //console.log('lang data',data, typeof(data))
     lang_data = data['Lang wise']
     daywise_data = data['Day wise']
+    weekend_data = data['Weekend wise']
+    weeks_data = data['Week wise']
 
     //language wise
     if ( (lang_cond==true) || (lang_cond.toLowerCase() =='true') )
 	{
-        data = lang_data
         lang_table = '<table class="table table-striped"> <caption> Language wise collection </caption> <tr> <th>Language</th> <th>Tracked Gross (in crore)</th> </tr>'
-        for (const key in data){
+        for (const key in lang_data){
             r_html = '<tr>'
             lang = key.replace('Gross' , '') 
-            gr = data[key] + 'cr'
+            gr = lang_data[key] + 'cr'
             r_html += '<td>' + lang + '</td>' + '<td>' + gr + '</td>'
             r_html += '</tr>'
             lang_table += r_html 
         } 
-        lang_table += '</table>'
+        lang_table += '</table><br>'
     }
 
+    //weekend wise data
+    data_columns1 = data['weekend_cols']
+    //header_list1 = data['weekend_header']
+    header_list1 = header_list.slice()
+    header_list1[0] = 'Weekend No.'
+    cond1 = header_list1.includes('Change')
+    if (cond1 == false){header_list1.push('Change')}
+    change_cols1 = [header_list1.length-1]
+    //console.log(weekend_data, header_list1 , data_columns1)
+    init_table_html = '<table class="table table-striped" id= "modal_table" style="margin:1px; width:100%;">'
+    init_table_html += '<caption> Weekends tracked collection </caption>'
+    weekend_html = create_table(weekend_data, header_list1, data_columns1, [], init_table_html,[],[],change_cols1) //text_sort_ids
+    weekend_html += '<br>'
+    
+    //week wise data
+    data_columns1 = data['week_cols']
+    //header_list1 = data['weekend_header']
+    header_list1 = header_list.slice()
+    header_list1[0] = 'Week No.'
+    cond1 = header_list1.includes('Change')
+    if (cond1== false){header_list1.push('Change')}
+    change_cols1 = [header_list1.length-1]
+    init_table_html = '<table class="table table-striped" id= "modal_table" style="margin:1px; width:100%;">'
+    init_table_html += '<caption> Week wise tracked collection </caption>'
+    weeks_html = create_table(weeks_data, header_list1, data_columns1, [] , init_table_html,[],[],change_cols1) //text_sort_ids
+    weeks_html += '<br>'
     
     // day wise data
     data = daywise_data
@@ -405,9 +431,13 @@ async function movie_data(movie_name, header_list='', data_columns='', lang_cond
     //data_columns =[ 'Day count' , 'Tracked India Gross'] //'Actual India gross',  
     init_table_html = '<table class="table table-striped" id= "modal_table" style="margin:1px; width:100%;">'
     init_table_html += '<caption> Day wise collection </caption>'
-    table_html = create_table(data, header_list, data_columns, text_sort_ids, init_table_html,[],[],change_cols)
+    cond1 = header_list.includes('Change')
+    if (cond1== true){change_cols = [header_list.length-1]}
+    daily_html = create_table(data, header_list, data_columns, text_sort_ids, init_table_html,[],[],change_cols)
+    
+    //combine all
     modal_div = document.getElementById("modal_body");
-    modal_html = lang_table + table_html
+    modal_html = lang_table + weekend_html + weeks_html + daily_html
     modal_div.innerHTML = modal_html
     return
 }

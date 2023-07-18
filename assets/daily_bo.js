@@ -10,7 +10,7 @@ option_endpoint = {
     "6": "roi",
 }
 base_url = 'http://127.0.0.1:8001'
-//base_url = 'https://daily_boxoffice-1-c5568081.deta.app'
+base_url = 'https://daily_boxoffice-1-c5568081.deta.app'
 
 //function - to get main table data 
 async function getData()

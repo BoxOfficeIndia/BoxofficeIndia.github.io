@@ -18,6 +18,7 @@ Boxoffice-db/template.html
 Boxoffice-db
 
 file-gen-script.py
+
 assets/file-gen-script copy.py
 collections/file-gen-script.py
 assets/del.html

@@ -68,10 +68,10 @@ async function getData()
     if (end_point=='india')
     {
         header_list = header_list.concat(['Tracked Gross', 'Tr. Shows', 'Change','Tr. Footfalls',
-         'Aggregate Tracked Gross', 'Agg. Actual Gross', 'Agg. Footfalls', 'Showdown']) //'Actual Gross',
+         'Aggregate Tracked Gross', 'Agg. Actual Gross', 'Agg. Footfalls', 'Live Report', 'Showdown']) //'Actual Gross',
         data_columns = data_columns.concat(['Tracked India Gross' , 'Tracked Shows' , 'Change' , 
             'Tracked Footfalls',  'Aggregate Tracked India Gross',
-            'Aggreagte Actual India Gross', 'Aggreagte Actual Footfalls',
+            'Aggreagte Actual India Gross', 'Aggreagte Actual Footfalls', 'Link',
         ])//'Actual India gross',
         gr_cols = [4,8,9] //gross in cr/crore
         ff_cols = [7,10] //footfall in Lakh/L
@@ -410,7 +410,7 @@ async function movie_data(movie_name, header_list='', data_columns='', lang_cond
     change_cols1 = [header_list1.length-1]
     //console.log(weekend_data, header_list1 , data_columns1)
     init_table_html = '<table class="table table-striped" id= "modal_table" style="margin:1px; width:100%;">'
-    init_table_html += '<caption> Weekends tracked collection </caption>'
+    init_table_html += '<caption> Weekend wise tracked collection </caption>'
     weekend_html = create_table(weekend_data, header_list1, data_columns1, [], init_table_html,[],[],change_cols1) //text_sort_ids
     weekend_html += '<br>'
     

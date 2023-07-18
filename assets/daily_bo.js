@@ -10,7 +10,7 @@ option_endpoint = {
     "6": "roi",
 }
 base_url = 'http://127.0.0.1:8001'
-base_url = 'https://daily_boxoffice-1-c5568081.deta.app'
+//base_url = 'https://daily_boxoffice-1-c5568081.deta.app'
 
 //function - to get main table data 
 async function getData()
@@ -382,6 +382,8 @@ async function movie_data(movie_name, header_list='', data_columns='', lang_cond
     daywise_data = data['Day wise']
     weekend_data = data['Weekend wise']
     weeks_data = data['Week wise']
+    data_range = data['data_range']
+    note_html = '<p style="font-size:14px;">' + data_range + '</p>'
 
     //language wise
     if ( (lang_cond==true) || (lang_cond.toLowerCase() =='true') )
@@ -437,7 +439,7 @@ async function movie_data(movie_name, header_list='', data_columns='', lang_cond
     
     //combine all
     modal_div = document.getElementById("modal_body");
-    modal_html = lang_table + weekend_html + weeks_html + daily_html
+    modal_html = note_html + lang_table + weekend_html + weeks_html + daily_html
     modal_div.innerHTML = modal_html
     return
 }

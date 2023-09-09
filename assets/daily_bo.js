@@ -85,40 +85,40 @@ async function getData()
         data_columns = data_columns.concat(['Telugu States Gross', 'Telugu States FF_tr']) //, 'Telugu Gross',])
         gr_cols = [4,6] //gross in cr/crore
         //table_html = create_table(data, header_list, data_columns, text_sort_ids, init_table_html, gr_cols)
-        modal_header_list = "Day No.,TS-AP Tracked gross <br>(in crore)"
-        modal_data_columns = "Day count,Telugu States Gross"
+        modal_header_list = "Day No.,TS-AP Tracked gross <br>(in crore),Change"
+        modal_data_columns = "Day count,Telugu States Gross,Change"
     }
     else if (end_point=='tamilnadu')
     {
         header_list = header_list.concat(['TN Tracked gross', 'Tracked Footfalls', 'Showdown'])	//'Tamil Lang Gross', 'Tracked Shows', 'Change','Showdown'
         data_columns = data_columns.concat(['TamilNadu Gross', 'TamilNadu FF_tr',]) //'Tamil Gross',
         gr_cols = [4,6] //gross in cr/crore
-        modal_header_list = "Day No.,TamilNadu Tracked gross <br>(in crore)"
-        modal_data_columns = "Day count,TamilNadu Gross"
+        modal_header_list = "Day No.,TamilNadu Tracked gross <br>(in crore),Change"
+        modal_data_columns = "Day count,TamilNadu Gross,Change"
     }
     else if (end_point=='karnataka')
     {
         header_list = header_list.concat(['KA Tracked gross', 'Tracked Footfalls', 'Showdown'])	//'Kannada Gross', 'Tracked Shows', 'Change','Showdown'
         data_columns = data_columns.concat(['Karnataka Gross', 'Karnataka FF_tr',]) //'Kannada Gross'
         gr_cols = [4,6] //gross in cr/crore
-        modal_header_list = "Day No.,Karnataka Tracked gross <br>(in crore)"
-        modal_data_columns = "Day count,Karnataka Gross"
+        modal_header_list = "Day No.,Karnataka Tracked gross <br>(in crore),Change"
+        modal_data_columns = "Day count,Karnataka Gross,Change"
     }
     else if (end_point=='kerala')
     {
         header_list = header_list.concat(['KL Tracked gross', 'Tracked Footfalls', 'Showdown'])	//'Malayalam Gross', 'Tracked Shows', 'Change','Showdown'
         data_columns = data_columns.concat(['Kerala Gross', 'Kerala FF_tr',]) //'Malayalam Gross',
         gr_cols = [4,6] //gross in cr/crore
-        modal_header_list = "Day No.,Kerala Tracked gross <br>(in crore)"
-        modal_data_columns = "Day count,Kerala Gross"
+        modal_header_list = "Day No.,Kerala Tracked gross <br>(in crore),Change"
+        modal_data_columns = "Day count,Kerala Gross,Change"
     }
     else if (end_point=='roi')
     {
         header_list = header_list.concat(['ROI Tracked gross', 'Tracked Footfalls', 'All India Hindi Gross', 'Showdown'])	//'Tracked Shows', 'Change','Showdown'
         data_columns = data_columns.concat(['ROI Gross', 'ROI FF_tr', 'Hindi Gross',])
         gr_cols = [4,6] //gross in cr/crore
-        modal_header_list = "Day No.,ROI Tracked gross,Hindi Language Tracked gross <br>(in crore)"  //North India
-        modal_data_columns = "Day count,ROI Gross,Hindi Gross"
+        modal_header_list = "Day No.,ROI Tracked gross,Hindi Language Tracked gross <br>(in crore),Change"  //Hindi Gross Change % //North India
+        modal_data_columns = "Day count,ROI Gross,Hindi Gross,Change"
     }
     else if (end_point=='multiplex')
     {

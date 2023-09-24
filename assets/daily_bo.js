@@ -66,15 +66,15 @@ async function getData()
     data_columns = ['Rank', 'Movie', 'Release date', 'Day count']
     if (end_point=='india')
     {
-        header_list = header_list.concat(['Tracked Gross', 'Tr. Shows', 'Change','Tr. Footfalls',
+        header_list = header_list.concat(['Tracked Gross', 'Change', 'Tr. Shows', 'Tr. Footfalls',
          'Aggregate Tracked Gross', 'Agg. Actual Gross', 'Agg. Footfalls', 'Live Report', 'Showdown']) //'Actual Gross',
-        data_columns = data_columns.concat(['Tracked India Gross', 'Tracked Shows', 'Change',
+        data_columns = data_columns.concat(['Tracked India Gross', 'Change', 'Tracked Shows', 
             'Tracked Footfalls', 'Aggregate Tracked India Gross',
             'Aggreagte Actual India Gross', 'Aggreagte Actual Footfalls', 'Link',
        ])//'Actual India gross',
         gr_cols = [4,8,9] //gross in cr/crore
         ff_cols = [7,10] //footfall in Lakh/L
-        change_cols = [6] //percentages
+        change_cols = [5] //percentages
         modal_header_list = "Day No.,Tracked India gross <br>(in crore),Change"
         modal_data_columns = "Day count,Tracked India Gross,Change"
         lang_cond = true

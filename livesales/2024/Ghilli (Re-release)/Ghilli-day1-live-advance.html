@@ -25,17 +25,17 @@
 
 	<!-- Open Graph / Facebook --> <!-- this is what Facebook and other social websites will draw on -->
 	<meta property="og:type" content="website">
-	<meta property="og:url" content="'https://trackboxoffice.com/'livesales/2024/Ghilli%20(Re-release)/Ghilli-day1-live-advance.html">
+	<meta property="og:url" content="https://trackboxoffice.com/livesales/2024/Ghilli%20(Re-release)/Ghilli-day1-live-advance.html">
 	<meta property="og:title" content=" Ghilli (Re-release) Day 1 advance sales Live - Track BO">
 	<meta property="og:description" content=" Ghilli (Re-release)Day 1 advance sales Live">
-	<meta property="og:image" content="'https://trackboxoffice.com/'">
+	<meta property="og:image" content="https://trackboxoffice.com/images/2024/kollywood/Ghilli (Re-release)/Ghilli (Re-release).jpg">
 
 	<!-- Twitter --> <!-- large card (summary_large_image)-->
 	<meta property="twitter:card" content="summary">
 	<meta property="twitter:site" content="@Box_OfficeTrack">
 	<meta property="twitter:title" content=" Ghilli (Re-release) Day 1 advance sales Live - Track BO">
 	<meta property="twitter:description" content=" Ghilli (Re-release)Day 1 advance sales Live">
-	<meta property="twitter:image" content="'https://trackboxoffice.com/'"></meta>
+	<meta property="twitter:image" content="https://trackboxoffice.com/images/2024/kollywood/Ghilli (Re-release)/Ghilli (Re-release).jpg"></meta>
 
 	<!-- ads -->
 	<!-- <script type="text/javascript" data-cfasync="false">
@@ -156,38 +156,43 @@
 
 <!-- tweet share button-->  
 	<a class="twitter-share-button"
-		href="https://twitter.com/intent/tweet?text=#Ghilli(Re-release) Day 1 Live Advance sales%0AReport inside👇%0A &amp;url='https://trackboxoffice.com/'livesales/2024/Ghilli%20(Re-release)/Ghilli-day1-live-advance.html" 
+		href="https://twitter.com/intent/tweet?text=#Ghilli(Re-release) Day 1 Live Advance sales%0AReport inside👇%0A#Ghilli4K #Ghilli #ThalapathyVijay #Trisha &amp;url=https://trackboxoffice.com/livesales/2024/Ghilli%20(Re-release)/Ghilli-day1-live-advance.html" 
 		data-size="large" target="_top" rel="nofollow">
 	Tweet</a>
 	<div style="width:100%; padding-top: 1%; padding-bottom: 3%;">
-	<img src="/" alt="Ghilli (Re-release) Poster" style="width:100%;height:275px;">
+	<img src="/images/2024/kollywood/Ghilli (Re-release)/Ghilli (Re-release).jpg" alt="Ghilli (Re-release) Poster" style="width:100%;height:275px;">
 	</div>
 	 <!-- ads -->
 
-	<div id="container-eb11d11fa1fb3730ecf9912917e6e437"></div>
-	<div id = "dropdown_div" style="width:100%; font-size: 15px; ; display: inline-block;">
-		<button style="display: inline-block;" type="button" onclick="getData()">Refresh Data</button>
+	<div id="container-eb11d11fa1fb3730ecf9912917e6e437"></div><div id = "dropdown_div" style="width:100%; font-size: 15px; ;
+		display: inline-block;">
+			<!--
+			<select name="bms_paytm" id="bms_paytm_dropdown" value="1">
+				<option>Paytm Movies</option>
+				<option>BookMyShow</option>
+			</select>
+			-->
+			<p style="padding-bottom: 0%; margin-bottom: 0%; font-size: 16px;"> Select Filter</p>
+			<select style="display: inline-block;" name="States" id="state_dropdown" value="1" onchange="getData()" >
+				<option value="1">India - Top states</option>
+				<option value="2">India - Top cities</option>
+				<option value="3">India - Language & Version wise</option>
+				<option value="4">India - National Chains Data</option>
+			</select>
+			<!--<div style="display: inline-block;" id = "tsap_dp_div"></div>-->
+			<!--<script>custom_drop()</script>-->
+			<button style="display: inline-block; font-size: 14px;" id ="live_refresh" type="button" onclick="getData()">Refresh Data</button>
+			<p style="font-size:14px; color: #0b5394;"> Scroll right for data without block seats</p>
 	</div>
-<!-- ads -->
-	<script type="text/javascript">
-		atOptions = {
-			'key' : 'a1e3b841720a7480db85987e10f5aaae',
-			'format' : 'iframe',
-			'height' : 300,
-			'width' : 160,
-			'params' : {}
-		};
-		document.write('<scr' + 'ipt type="text/javascript" src="http' + (location.protocol === 'https:' ? 's' : '') + '://www.effectivecreativeformat.com/a1e3b841720a7480db85987e10f5aaae/invoke.js"></scr' + 'ipt>');
-	</script>
- <div id="live_gross_container" style="width: 100%;"> </div>
-		<script>
-		document.addEventListener("DOMContentLoaded", function() {
-		//console.log('loaded');
-		getData();
-		});
-		</script>
 
-	<!-- ads -->
+	<div id="adv_sales_container" style="width: 100%;"> </div>
+	<script>
+	document.addEventListener("DOMContentLoaded", function() {
+	//console.log('loaded');
+	getData();
+	});
+	</script>
+<!-- ads -->
 	<script type="text/javascript">
 	atOptions = {
 			'key' : '9002fc31278d2d205cf1b48fa8d9b11e',
@@ -288,7 +293,7 @@
 	async function getData()
 	{
 		cache_meth = "reload";
-		query_url="'https://crudapi.trackboxoffice.com'/livedata"?movie_name=Ghilli (Re-release)&check_date=2024-04-20&mode=advance;
+		query_url="https://crudapi.trackboxoffice.com/livedata?movie_name=Ghilli (Re-release)&check_date=2024-04-20&mode=advance/livedata";
 		var response = await fetch(query_url, {
 			method: 'GET',
 			cache:cache_meth ,
@@ -307,10 +312,7 @@
 		var data = await response.text();
 		//console.log('response:' + response + response.status)
 		data = JSON.parse(data)
-		//console.log(data)
-		data = data.items
-		total_data = data[0]
-		//console.log(total_data)
+		total_data = data
 
 		fetch_time = total_data['fetch_time']
 		total_coll = Math.round(total_data['Total Gross']).toLocaleString('en-IN') //formatINR
@@ -365,7 +367,7 @@
 			2) Two types of gross columns - <b>Adv gross</b> : gross with block seats & <b>Non Block Est. Gross</b> : estimated gross without block seats <br>
 			3) Two types of tickets columns - <b>Tickets</b> : tickets with block seats & <b>Act. Tickets Sold</b> : actual tickets sold by eliminating block seats <br>
 			4) National Chains data - data without block seats (both gross & ticktets)<br>
-			5) Block seats elimination is done by  ML model & statistical estimation - but some theatres still might contain block seats <br>` +`
+			5) Block seats elimination is done by statistical estimation - but some theatres still might contain block seats <br>` +`
 			<text style="color:red; font-size:10px;"> Data Last compiled/tracked: ` + fetch_time + `</text>
 		</p>`
 

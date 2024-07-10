@@ -107,6 +107,13 @@
 		#collections td{font-size: 4.1vw;}
 		#collections caption{font-size: 5.1vw}
 		#p_heading {font-size: 4.2vw; padding-left: 2px;}
+		#collections{
+			/*max-width:100%;*/
+			display: block;
+			overflow-x: auto;
+			white-space:nowrap;
+		}
+		#collections caption {display: inline-block; margin-left: 35%;}
 	} 
 	@media only screen and (max-width: 720px) {
 		/* horizontal scrollbar for tables if mobile screen */
@@ -120,6 +127,13 @@
 		#collections td{font-size: 3.2vw;}
 		#collections caption{font-size: 4.2vw}
 		#p_heading {font-size: 3.5vw; padding-left: 5px;}
+		#collections{
+			/*max-width:100%;*/
+			display: block;
+			overflow-x: auto;
+			white-space:nowrap;
+		}
+		#collections caption {display: inline-block; margin-left: 40%;}
 	} 
 </style>
 	
@@ -182,7 +196,10 @@
 			<!--<div style="display: inline-block;" id = "tsap_dp_div"></div>-->
 			<!--<script>custom_drop()</script>-->
 			<button style="display: inline-block; font-size: 14px;" id ="live_refresh" type="button" onclick="getData()">Refresh Data</button>
-			<p style="font-size:14px; color: #0b5394;"> Scroll right for data without block seats</p>
+			<!--<p style="font-size:14px; color: #0b5394;"> Scroll right for data without block seats</p> -->
+			<style>.dt_btns{border: none;background-color: inherit;padding: 3px;font-size: 13px;cursor: pointer;display: inline-block;}</style>
+			<p style="color:#007185; font-size:12px; text-align:right; padding-bottom:0px; margin-bottom: 0px;" > 
+				<button id="scorll_arr" class="dt_btns"> Scroll right for data without block seats >> </button> </p>
 	</div>
 
 	<div id="adv_sales_container" style="width: 100%;"> </div>

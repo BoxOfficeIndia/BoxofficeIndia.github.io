@@ -11,3 +11,5 @@ plugins:
   #- jekyll-sitemap
 
 theme: jekyll-theme-primer
+
+include: [".well-known"]

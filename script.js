@@ -1,3 +1,23 @@
+console.log('abcd')
+/*background watermark*/
+// var textWatermark = 'TrackBO';
+// var body = document.getElementsByTagName('body')[0];
+// var background = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='100px' width='100px'>" +
+// "<text transform='translate(20, 100) rotate(-30)' fill='rgba(128,128,128, 0.3)' font-size='20' >" + textWatermark + "</text></svg>\")";
+// body.style.backgroundImage = background
+
+/*background watermark*/
+var textWatermark = 'TrackBO';
+var fullTextWatermark = '';
+var n = 1000;
+for (var i = 0; i < n; i++) {
+    fullTextWatermark+= ' ' + textWatermark;
+}
+wm_elem = document.createElement("p")
+wm_elem.setAttribute("id","watermark")
+wm_elem.innerHTML= fullTextWatermark
+document.body.appendChild(wm_elem)
+//document.getElementById('watermark').innerHTML = fullTextWatermark
 
 nav_elems = `<a href="/">Home</a>
         <a href="/live_sales">Live Advance Sales</a>
@@ -37,16 +57,6 @@ else
     
 }
 
-
-
-
-
-
-
-
-
-
-
 let slideIndex = 0;
 function showSlides() 
 {
@@ -84,11 +94,9 @@ function slides_disp()
     body.setAttribute("height", tot_height);
     body.setAttribute("width", tot_width);
 
-
     var elem = document.createElement('div'); //slides1
     body.appendChild(elem);
     elem.className = "slideshow-container";
-
     
     var dot_div = document.createElement('div');
     body.appendChild(dot_div);
@@ -186,3 +194,4 @@ function img_disp()
     sl_img.setAttribute("max_width", '100%');
     body.appendChild(sl_img);
 }
+

@@ -20,15 +20,15 @@ document.body.appendChild(wm_elem)
 //document.getElementById('watermark').innerHTML = fullTextWatermark
 
 nav_elems = `<a href="/">Home</a>
-        <a href="/live_sales">Live Advance Sales</a>
-        <a href="/livetracking">Live Collection Tracking</a>
-        <a href="/collections">Collection Reports</a>
-        <a href="/collections">Boxoffice Records</a>   
-        <a href="/advancesales">Advance Sales Reports</a>
-        <a href="/OSadvancesales">Overseas Advance Sales</a>
-        <a href="/blogs-articles/index.html">News</a>
-        <a href="/gallery/index.html">Gallery</a>
-        <a href="/site data/about.html">About Us</a>
+		<a href="/livesales">Live Advance Sales</a>
+		<a href="/livetracking">Live Collection Tracking</a>
+		<a href="/collections">Collection Reports</a>
+		<a href="/collections">Boxoffice Records</a>   
+		<a href="/advancesales">Advance Sales Reports</a>
+		<a href="/OSadvancesales">Overseas Advance Sales</a>
+		<a href="/blogs-articles/index.html">News</a>
+		<a href="/gallery/index.html">Gallery</a>
+		<a href="/site data/about.html">About Us</a>
 `
 function openNav() {
     document.getElementById("topnav").style.width = "250px";

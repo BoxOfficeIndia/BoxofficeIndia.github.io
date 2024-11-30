@@ -1,4 +1,4 @@
-console.log('abcd')
+
 /*background watermark*/
 // var textWatermark = 'TrackBO';
 // var body = document.getElementsByTagName('body')[0];

@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Allow: /
+
+# Sitemap Location (Indexing)
+Sitemap: https://trackboxoffice.com/sitemap.xml

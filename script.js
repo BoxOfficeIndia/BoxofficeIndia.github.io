@@ -6,6 +6,17 @@
 // "<text transform='translate(20, 100) rotate(-30)' fill='rgba(128,128,128, 0.3)' font-size='20' >" + textWatermark + "</text></svg>\")";
 // body.style.backgroundImage = background
 
+function addStylesheet(href) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = href;
+    document.head.appendChild(link);
+}
+addStylesheet(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css")
+//  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 /*background watermark*/
 var textWatermark = 'TrackBO';
 var fullTextWatermark = '';
@@ -19,16 +30,82 @@ wm_elem.innerHTML= fullTextWatermark
 document.body.appendChild(wm_elem)
 //document.getElementById('watermark').innerHTML = fullTextWatermark
 
+/* page views */
+document.addEventListener('DOMContentLoaded', function() {
+    function displayPageInfo(pagePath) {
+        headers = {
+            'Content-Type': 'application/json',
+            'Sec-Fetch-Mode': 'no-cors',
+        }
+        fetch(`http://localhost:8000/pageinfo?pagePath=${encodeURIComponent(pagePath)}`,
+            {
+                method: 'GET',
+                headers: headers,
+            }
+        )
+        .then(response => response.json())
+        .then(data => {
+            const pageInfoDiv = document.createElement('div');
+            pageInfoDiv.id = 'page_metadata'
+            pageInfoDiv.classList.add('page-info'); // Add CSS class
+
+            // Format the output
+            const formattedInfo = `Published: ${data.publishedDate} | Views: ${data.pageViews} | Author: ${data.author}`; //Page Views
+            pageInfoDiv.textContent = formattedInfo;
+
+            const pageTitle = document.getElementById('p_heading');
+            if (pageTitle) {
+                pageTitle.insertAdjacentElement('afterend', pageInfoDiv);
+                addShareButtons(pageInfoDiv); 
+            } else {
+            console.error("Page title element not found.");
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching page info:", error);
+        });
+    }
+    /* share buttons */
+    function addShareButtons(pageInfoDiv) {
+        var shareContainer = document.querySelector('#share_container'); // Get the container
+        if (!shareContainer) {shareContainer = document.createElement('div'); shareContainer.id = 'share_container'; shareContainer.classList.add('share-container'); };
+    
+        const twitterButton = document.querySelector('.twitter-share-button');
+        if (twitterButton) {
+        shareContainer.appendChild(twitterButton);
+        }
+
+        const whatsappButton = document.createElement('a');
+        whatsappButton.href = `whatsapp://send?text=${encodeURIComponent(window.location.href)}`;
+        whatsappButton.classList.add('share-button', 'whatsapp-button');
+        whatsappButton.innerHTML = '<i class="fab fa-whatsapp"></i>';
+
+        const instagramButton = document.createElement('a');
+        instagramButton.href = `https://www.instagram.com/create/story/?url=${encodeURIComponent(window.location.href)}`;
+        instagramButton.classList.add('share-button', 'instagram-button');
+        instagramButton.innerHTML = '<i class="fab fa-instagram"></i>';
+
+        shareContainer.appendChild(whatsappButton);
+        shareContainer.appendChild(instagramButton);
+
+        pageInfoDiv.insertAdjacentElement('afterend', shareContainer);
+    }
+    
+    //addShareButtons(); // Call the function to add buttons
+    displayPageInfo(window.location.pathname);
+    
+});
+
 nav_elems = `<a href="/">Home</a>
-		<a href="/livesales">Live Advance Sales</a>
-		<a href="/livetracking">Live Collection Tracking</a>
-		<a href="/collections">Collection Reports</a>
-		<a href="/collections">Boxoffice Records</a>   
-		<a href="/advancesales">Advance Sales Reports</a>
-		<a href="/OSadvancesales">Overseas Advance Sales</a>
-		<a href="/blogs-articles/index.html">News</a>
-		<a href="/gallery/index.html">Gallery</a>
-		<a href="/site data/about.html">About Us</a>
+    <a href="/livesales">Live Advance Sales</a>
+    <a href="/livetracking">Live Collection Tracking</a>
+    <a href="/collections">Collection Reports</a>
+    <a href="/collections">Boxoffice Records</a>   
+    <a href="/advancesales">Advance Sales Reports</a>
+    <a href="/OSadvancesales">Overseas Advance Sales</a>
+    <a href="/blogs-articles/index.html">News</a>
+    <a href="/gallery/index.html">Gallery</a>
+    <a href="/site data/about.html">About Us</a>
 `
 function openNav() {
     document.getElementById("topnav").style.width = "250px";

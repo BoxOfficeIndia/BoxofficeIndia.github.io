@@ -91,8 +91,17 @@ svg {width:100%; height:100%}
   background-color: #25D366;
 }
 
-.instagram-button {
-  background-color: #E1306C;
+.native-share-button {
+  background-color: #0b5394;
+  border: 0;
+  cursor: pointer;
+}
+
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 3px;
 }
 
 
@@ -107,7 +116,7 @@ h1{
 a:visited { text-decoration: none; color:blue; }
 
 #heading{
-    
+
     text-align: center;
     margin: 20px;
     /*display: block;*/
@@ -127,11 +136,11 @@ a:visited { text-decoration: none; color:blue; }
     display : flex;
     align-items: center;
     justify-content: space-between;
-    background-color:#010302; 
+    background-color:#010302;
     position: sticky;
     top: 0px;
 }
-  
+
 #topnav a {
     float: left;
     color: #f2f2f2;
@@ -140,7 +149,7 @@ a:visited { text-decoration: none; color:blue; }
     text-decoration: none;
     font-size: 20px;
 }
-  
+
 #topnav a:hover {
     background-color: #ddd;
     color: black;
@@ -169,7 +178,7 @@ a:visited { text-decoration: none; color:blue; }
         transition: 0.5s;
         padding-top: 60px;
       }
-      
+
       #topnav a {
         display: block;
         color: #f2f2f2;
@@ -179,11 +188,11 @@ a:visited { text-decoration: none; color:blue; }
         transition: 0.3s;
         margin: 0px;
       }
-       
+
       #topnav a.active {
         color: white;
       }
-      
+
       #topnav a:hover:not(.active) {
         background-color: #555;
         color: white;
@@ -191,19 +200,22 @@ a:visited { text-decoration: none; color:blue; }
       #topnav a:hover {
         color: #f1f1f1;
       }
-      
+
       #topnav .closebtn {
         position: absolute;
         top: 0;
         right: 25px;
         font-size: 26px;
-        /*margin-left: 50px;*/
+        color: #f2f2f2;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
       }
-      
-      
-     
+
+
+
   }
-  
+
   /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
   /*
   @media screen and (max-width: 400px) {
@@ -269,7 +281,7 @@ a:visited { text-decoration: none; color:blue; }
     */
 }
 .columns {
-    float: left; 
+    float: left;
     width:50%;
 }
 
@@ -293,7 +305,7 @@ a:visited { text-decoration: none; color:blue; }
     text-align: left;
     /*background-color: #04AA6D;*/
     color: white;
-}   
+}
 
 #columns_div::after{
     content: "";
@@ -388,7 +400,7 @@ img {vertical-align: middle;}
 }
 
 @keyframes fade {
-  from {opacity: .4} 
+  from {opacity: .4}
   to {opacity: 1}
 }
 
@@ -402,7 +414,7 @@ img {vertical-align: middle;}
         padding: 1px 16px;
         height: 1000px;
       }*/
-      
+
 
       /*
     #topnav {
@@ -417,7 +429,7 @@ img {vertical-align: middle;}
         transition: 0.5s;
         padding-top: 60px;
       }
-      
+
       #topnav a {
         padding: 8px 8px 8px 32px;
         text-decoration: none;
@@ -426,11 +438,11 @@ img {vertical-align: middle;}
         display: block;
         transition: 0.3s;
       }
-      
+
       #topnav a:hover {
         color: #f1f1f1;
       }
-      
+
       #topnav .closebtn {
         position: absolute;
         top: 0;
@@ -439,4 +451,4 @@ img {vertical-align: middle;}
         margin-left: 50px;
       }
       */
-      
+

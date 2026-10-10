@@ -113,7 +113,7 @@
 
    
     <!--<div id="adv_sales_container" style="width: 100%;"></div> height="200" width="300" --> 
-    <iframe id = "adv_iframe" onload="iframeload()" style="width: 100%; " src="/OSadvancesales/varisu/Varisu (Tamil)_10Jan_USA_adv_-upd6.html" >
+    <iframe id = "adv_iframe" onload="iframeload()" style="width: 100%; " src="/OSadvancesales/2023/Varisu/Varisu (Tamil)_10Jan_USA_adv_-upd6.html" >
     </iframe> 
 
 
@@ -192,6 +192,9 @@
 
   function getData()
   {
+    const archiveContainer = document.getElementById("adv_sales_container");
+    if (archiveContainer) archiveContainer.innerHTML = '<div style="text-align: center;">Archived report: the live state breakdown is no longer available.</div>';
+    return;
     let base_api = "https://bki4b3.deta.dev/";
     let api_url;
     //base_api = "http://192.168.0.13:8001/"
@@ -302,4 +305,3 @@
     </script>
 
 </html>
-            

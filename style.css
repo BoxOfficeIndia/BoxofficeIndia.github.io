@@ -113,12 +113,28 @@ h1{
     text-align: center;
 }
 
+/* Shared brand treatment for every legacy and current page header. */
+#heading > img {
+    display: none !important;
+}
+
+#heading h1 {
+    display: inline-block;
+    width: min(72vw, 320px);
+    aspect-ratio: 16 / 5;
+    margin: 0;
+    background: url('/images/trackbo-logo.svg') center / contain no-repeat;
+    font-size: 0;
+    line-height: 0;
+    vertical-align: middle;
+}
+
 a:visited { text-decoration: none; color:blue; }
 
 #heading{
 
     text-align: center;
-    margin: 20px;
+    margin: 12px 20px;
     /*display: block;*/
     /*font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 2em;
@@ -251,7 +267,7 @@ a:visited { text-decoration: none; color:blue; }
     padding-bottom: 20px;
 }
 
-#about1{float:left;}
+#about1, .about1{float:left;}
 #about2{float:right;}
 #about3{margin:0 auto;display: inline-block;}
 

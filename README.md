@@ -1,5 +1,6 @@
-# BoxofficeIndia.github.io
-Repository for github pages hosted website
-website link: https://trackboxoffice.com/
+# Track BO
+Repository for the Track BO GitHub Pages website.
 
-[![pages-build-deployment](https://github.com/BoxOfficeIndia/BoxofficeIndia.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/BoxOfficeIndia/BoxofficeIndia.github.io/actions/workflows/pages/pages-build-deployment)
+Website: https://trackboxoffice.com/
+
+[![pages-build-deployment](https://github.com/TrackBoxOffice/trackboxoffice.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/TrackBoxOffice/trackboxoffice.github.io/actions/workflows/pages/pages-build-deployment)
